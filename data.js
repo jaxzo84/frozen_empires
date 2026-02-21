@@ -451,7 +451,7 @@ const UNITS = {
     fight: '6/7', shoot: '6/7', resolve: 5,
     specialRules: ['Drilled', 'Fast Reload'],
     options: [
-      'May be upgraded to Trained for +1 pt/model (note: starts Trained, upgrade to Veteran)',
+      'May be upgraded to Veteran for +1 pt/model',
       'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
     ],
     minModels: 4, maxModels: 12
@@ -708,7 +708,6 @@ const UNITS = {
     fight: '6/7', shoot: '6/7', resolve: 4,
     specialRules: ['Expertly Drilled (dismounted)', 'Quick (mounted)', 'War Cry'],
     options: [
-      'May be upgraded to Veteran (already Veteran — no upgrade)',
       '1 of 4 may carry Explosives at no cost',
       'Explosive carriers may exchange Dragoon Musket for Hand Mortar at no cost',
     ],
@@ -1068,12 +1067,12 @@ const FACTIONS = [
     nationality: NATIONALITIES.RUSSIA,
     description: 'Peter\'s personal force — the best trained and equipped regiment in Russia. So skilled that Charles XII of Sweden let them march back from Narva with banners unfurled.',
     forceSpecialRules: [
-      'Fusilyory and Pikinyory must be upgraded to Veteran.',
-      'Pushkari must be upgraded to Trained.',
+      '⚠ Module rule states Fusilyory and Pikinyory must be upgraded to Veteran — but Fusilyory has no upgrade option on its unit card, and Pikinyory can only upgrade to Trained. Recommended house rule: Fusilyory count as Veteran, Pikinyory upgrade to Trained.',
+      'Pushkari must be upgraded to Trained (+1 pt/model).',
       'All units gain the Unwavering Special Rule.',
       'If using Army Scale, only one Semyonovsky Company may be taken.',
-      'Commander may spend 2 CP to issue platoon action to all Drilled units in Command Range.',
-      'Once per game, at the start of any turn, remove 1 point of fatigue from all units.',
+      'Commander may spend 2 CP to issue a platoon action to all Drilled units in Command Range.',
+      'Once per game, at the start of any turn, remove 1 Fatigue from all units.',
     ],
     forceOptions: [],
     coreUnits: ['fusilyory', 'pikinyory', 'pushkari'],
