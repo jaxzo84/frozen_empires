@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frozen Empires — Force Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-title-block">
+        <div class="header-eyebrow">An Unofficial Blood &amp; Plunder Module</div>
+        <h1 class="header-title">FROZEN EMPIRES</h1>
+        <div class="header-subtitle">Great Northern War — Force Builder</div>
+      </div>
+      <div class="header-meta">
+        <div class="points-display">
+          <span class="points-label">Total Points</span>
+          <span class="points-value" id="totalPoints">0</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn-icon" id="btnNew" title="New Force">⊕ New Force</button>
+          <button class="btn-icon" id="btnExport" title="Export to Text">⬇ Export</button>
+          <button class="btn-icon" id="btnImport" title="Import">⬆ Import</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="app-layout">
+
+    <!-- LEFT PANEL: Force Setup -->
+    <aside class="panel panel-left">
+      <h2 class="panel-title">Force Setup</h2>
+
+      <!-- Nationality Filter -->
+      <section class="setup-section">
+        <label class="form-label">Nationality</label>
+        <div class="nationality-grid" id="nationalityGrid">
+          <!-- rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Faction Select -->
+      <section class="setup-section" id="factionSection" style="display:none">
+        <label class="form-label">Faction</label>
+        <select class="form-select" id="factionSelect">
+          <option value="">— Choose Faction —</option>
+        </select>
+        <div class="faction-info" id="factionInfo"></div>
+      </section>
+
+      <!-- Commander Select -->
+      <section class="setup-section" id="commanderSection" style="display:none">
+        <label class="form-label">Commander</label>
+        <select class="form-select" id="commanderSelect">
+          <option value="">— Choose Commander —</option>
+        </select>
+        <div class="commander-card" id="commanderCard" style="display:none"></div>
+      </section>
+
+      <!-- Force Options -->
+      <section class="setup-section" id="forceOptionsSection" style="display:none">
+        <label class="form-label">Force Options</label>
+        <div id="forceOptionsList"></div>
+      </section>
+    </aside>
+
+    <!-- CENTER PANEL: Unit Roster -->
+    <main class="panel panel-center">
+      <div class="panel-header">
+        <h2 class="panel-title">Unit Roster</h2>
+        <div class="unit-add-controls" id="unitAddControls" style="display:none">
+          <select class="form-select inline-select" id="unitTypeSelect">
+            <option value="">— Unit Type —</option>
+            <option value="core">Core</option>
+            <option value="support">Support</option>
+          </select>
+          <select class="form-select inline-select" id="unitSelect">
+            <option value="">— Select Unit —</option>
+          </select>
+          <button class="btn-primary" id="btnAddUnit">Add Unit</button>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">⚔</div>
+        <div class="empty-text">Select a nationality and faction to begin building your force.</div>
+      </div>
+
+      <div class="roster-list" id="rosterList"></div>
+    </main>
+
+    <!-- RIGHT PANEL: Unit Library & Summary -->
+    <aside class="panel panel-right">
+      <h2 class="panel-title">Unit Reference</h2>
+
+      <div class="tab-bar">
+        <button class="tab active" data-tab="library">Library</button>
+        <button class="tab" data-tab="summary">Summary</button>
+        <button class="tab" data-tab="rules">Rules</button>
+      </div>
+
+      <div class="tab-content active" id="tab-library">
+        <div class="search-bar">
+          <input type="text" class="form-input" id="unitSearch" placeholder="Search units..." />
+        </div>
+        <div class="unit-library" id="unitLibrary">
+          <div class="empty-state"><div class="empty-text">Select a faction to browse units.</div></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-summary">
+        <div class="summary-panel" id="summaryPanel">
+          <div class="empty-state"><div class="empty-text">Add units to see your force summary.</div></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-rules">
+        <div class="rules-panel" id="rulesPanel">
+          <h3 class="rules-section-title">Force Special Rules</h3>
+          <div id="factionRulesDisplay"><p class="muted">Select a faction to see its rules.</p></div>
+          <h3 class="rules-section-title" style="margin-top:1.5rem">Force Options</h3>
+          <div id="factionOptionsDisplay"><p class="muted">Select a faction to see force options.</p></div>
+          <h3 class="rules-section-title" style="margin-top:1.5rem">New Special Rules</h3>
+          <div class="rules-glossary">
+            <div class="rule-entry"><strong>Autocrat</strong>: Has High Standing. If removed as a casualty, all friendly units gain +1 penalty to all Rally tests.</div>
+            <div class="rule-entry"><strong>Booming Voice</strong>: Adds 2" to Command Range.</div>
+            <div class="rule-entry"><strong>Dauntless</strong>: Reduces dice rolled for a Fatigue test from a Shoot action by one.</div>
+            <div class="rule-entry"><strong>Expert Pilot</strong>: All ships in this Force may re-roll run-aground tests (while commander is alive).</div>
+            <div class="rule-entry"><strong>Gunnery Captain</strong>: All units gain -1 bonus to initial Artillery hit. Does not stack with Master Gunner.</div>
+            <div class="rule-entry"><strong>Prejudice</strong>: Unit adds +1 penalty to Rally tests from a Commander's Command Point.</div>
+            <div class="rule-entry"><strong>Reactive Commander</strong>: If both players reveal identical Activation Cards, this Force activates second.</div>
+            <div class="rule-entry"><strong>Shipwright</strong>: When issuing CP for Repair, unit receives -1 bonus to the test. Stacks with Carpenter.</div>
+            <div class="rule-entry"><strong>Wanted</strong>: When this character is last in his unit or would be removed in melee with standard weapons, opponent may spend a Fortune Point to capture him instead.</div>
+            <div class="rule-entry"><strong>Dragoon Musket</strong>: Follows Firelock Musket rules but can be reloaded and fired from horseback.</div>
+            <div class="rule-entry"><strong>Heavy Cavalry Saber</strong>: Standard Melee Weapon. Confers +1 Save penalty to target of a free Fight Action during a Charge while mounted.</div>
+            <div class="rule-entry"><strong>Recurve Bow</strong>: Same as Bow (B&amp;P p.115). Always hits on 10s if target ≤20". If target &lt;8", save bonus is +2 instead of +3. Can be used while Mounted.</div>
+            <div class="rule-entry"><strong>Hand Mortar</strong>: Allows Explosives units to launch at up to 8", misfires on 1-3. Cannot use 2 actions to avoid misfire.</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div><!-- /app-layout -->
+
+  <!-- UNIT EDITOR MODAL -->
+  <div class="modal-overlay" id="unitModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Edit Unit</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-danger" id="btnRemoveUnit">Remove Unit</button>
+        <button class="btn-primary" id="btnSaveUnit">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPORT MODAL -->
+  <div class="modal-overlay" id="exportModal" style="display:none">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3 class="modal-title">Export Force</h3>
+        <button class="modal-close" id="exportModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <textarea class="export-textarea" id="exportText" readonly></textarea>
+        <div style="margin-top:0.75rem; display:flex; gap:0.5rem;">
+          <button class="btn-primary" id="btnCopyExport">Copy to Clipboard</button>
+          <button class="btn-secondary" id="btnDownloadExport">Download .txt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORT MODAL -->
+  <div class="modal-overlay" id="importModal" style="display:none">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3 class="modal-title">Import Force</h3>
+        <button class="modal-close" id="importModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted" style="margin-bottom:0.75rem">Paste a previously exported force JSON below:</p>
+        <textarea class="export-textarea" id="importText" placeholder="Paste force JSON here..."></textarea>
+        <div style="margin-top:0.75rem">
+          <button class="btn-primary" id="btnDoImport">Import Force</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
