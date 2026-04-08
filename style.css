@@ -1049,3 +1049,112 @@ body {
     border-bottom: 1px solid var(--border-dk);
   }
 }
+
+/* ── COMMANDER RULE PICKER ── */
+.commander-rule-picker {
+  margin-top: 0.6rem;
+}
+
+.rule-picker-label {
+  font-size: 0.75rem;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rule-picker-count {
+  background: var(--border-dk);
+  color: var(--ink-faded);
+  border-radius: 999px;
+  padding: 0.05em 0.5em;
+  font-size: 0.7rem;
+  font-family: var(--font-body);
+}
+
+.rule-picker-count.count-done {
+  background: var(--brass-dk);
+  color: var(--parchment);
+}
+
+.rule-picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.rule-chip {
+  background: transparent;
+  border: 1px solid var(--border-dk);
+  color: var(--ink-faded);
+  border-radius: 4px;
+  padding: 0.2em 0.55em;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rule-chip:hover:not(:disabled) {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.rule-chip-on {
+  background: var(--brass-dk);
+  border-color: var(--brass);
+  color: var(--parchment);
+  font-weight: 500;
+}
+
+.rule-chip-on:hover {
+  background: var(--red-dk);
+  border-color: var(--red-dk);
+  color: var(--parchment);
+}
+
+.rule-chip-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.rule-picker-chosen {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--brass);
+}
+
+/* ── POOR LEADERSHIP TOGGLE ── */
+.poor-leadership-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  padding: 0.35rem 0.5rem;
+  border: 1px dashed var(--border-dk);
+  border-radius: 4px;
+  transition: border-color 0.15s;
+}
+
+.poor-leadership-toggle:hover {
+  border-color: var(--brass);
+  color: var(--ink-mid);
+}
+
+.poor-leadership-toggle input[type="checkbox"] {
+  accent-color: var(--brass-dk);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.poor-leadership-toggle strong {
+  color: var(--red-dk);
+}

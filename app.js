@@ -7,6 +7,8 @@ let state = {
   nationality: null,
   factionId: null,
   commanderId: null,
+  commanderPickedRules: [], // Array of chosen special rule strings for standard commanders
+  commanderPoorLeadership: false, // Russian standard commander option
   roster: [],          // Array of rosterUnit objects
   forceOptions: {},    // Map of optionIndex -> boolean
   nextId: 1,
@@ -124,12 +126,15 @@ function renderCommanderSection() {
   if (cmd) {
     card.style.display = '';
     card.innerHTML = renderCommanderCard(cmd);
+    attachRulePickerListeners();
   } else {
     card.style.display = 'none';
   }
 
   select.onchange = () => {
     state.commanderId = select.value || null;
+    state.commanderPickedRules = [];
+    state.commanderPoorLeadership = false;
     renderCommanderSection();
     updatePoints();
     renderSummary();
@@ -139,6 +144,54 @@ function renderCommanderSection() {
 function renderCommanderCard(cmd) {
   const tierColors = { standard: 'tier-standard', historic: 'tier-historic', legendary: 'tier-legendary' };
   const tierLabel = { standard: 'Standard', historic: 'Historic', legendary: 'Legendary' };
+
+  // Calculate effective picks (Poor Leadership gives +1)
+  const basePicks = cmd.commanderRulePicks || 0;
+  const poorLeadershipActive = cmd.poorLeadershipOption && state.commanderPoorLeadership;
+  const effectivePicks = basePicks + (poorLeadershipActive ? 1 : 0);
+
+  // Build the special rules section
+  let rulesHtml = '';
+  if (cmd.commanderRuleList && (effectivePicks > 0 || cmd.poorLeadershipOption)) {
+    const available = COMMANDER_SPECIAL_RULES[cmd.commanderRuleList] || [];
+    const chosen = state.commanderPickedRules;
+
+    // Poor Leadership toggle
+    const plToggle = cmd.poorLeadershipOption ? `
+      <label class="poor-leadership-toggle">
+        <input type="checkbox" id="poorLeadershipCheck" ${poorLeadershipActive ? 'checked' : ''}>
+        <span>Take <strong>Poor Leadership</strong> for +1 extra rule</span>
+      </label>
+    ` : '';
+
+    // Rule chips (only if there are picks available)
+    let chipsHtml = '';
+    if (effectivePicks > 0) {
+      chipsHtml = `
+        <div class="rule-picker-label">
+          Choose ${effectivePicks} Special Rule${effectivePicks > 1 ? 's' : ''}
+          <span class="rule-picker-count ${chosen.length === effectivePicks ? 'count-done' : ''}">${chosen.length}/${effectivePicks}</span>
+        </div>
+        <div class="rule-picker-chips">
+          ${available.map(rule => {
+            const isChosen = chosen.includes(rule);
+            const isDisabled = !isChosen && chosen.length >= effectivePicks;
+            return `<button class="rule-chip ${isChosen ? 'rule-chip-on' : ''} ${isDisabled ? 'rule-chip-disabled' : ''}"
+              data-rule="${rule}" ${isDisabled ? 'disabled' : ''}>${rule}</button>`;
+          }).join('')}
+        </div>
+        ${chosen.length > 0 ? `<div class="rule-picker-chosen"><em>Rules:</em> ${poorLeadershipActive ? 'Poor Leadership, ' : ''}${chosen.join(', ')}</div>` : (poorLeadershipActive ? `<div class="rule-picker-chosen"><em>Rules:</em> Poor Leadership</div>` : '')}
+      `;
+    } else if (poorLeadershipActive) {
+      chipsHtml = `<div class="rule-picker-chosen"><em>Rules:</em> Poor Leadership</div>`;
+    }
+
+    rulesHtml = `<div class="commander-rule-picker">${plToggle}${chipsHtml}</div>`;
+
+  } else if (cmd.specialRules && cmd.specialRules.length) {
+    rulesHtml = `<div class="commander-rules"><em>Rules:</em> ${cmd.specialRules.join(', ')}</div>`;
+  }
+
   return `
     <div class="commander-name">${cmd.name}</div>
     <span class="commander-tier ${tierColors[cmd.tier]}">${tierLabel[cmd.tier]}</span>
@@ -157,10 +210,53 @@ function renderCommanderCard(cmd) {
       </div>
     </div>
     ${cmd.mainWeapons ? `<div class="commander-rules"><em>Weapons:</em> ${cmd.mainWeapons}</div>` : ''}
-    ${cmd.specialRules && cmd.specialRules.length ? `<div class="commander-rules"><em>Rules:</em> ${cmd.specialRules.join(', ')}</div>` : ''}
+    ${rulesHtml}
     ${cmd.notes ? `<div class="commander-rules"><em>Note:</em> ${cmd.notes}</div>` : ''}
     ${cmd.bio ? `<div class="commander-bio">${cmd.bio}</div>` : ''}
   `;
+}
+
+function attachRulePickerListeners() {
+  // Poor Leadership toggle
+  const plCheck = document.getElementById('poorLeadershipCheck');
+  if (plCheck) {
+    plCheck.addEventListener('change', () => {
+      state.commanderPoorLeadership = plCheck.checked;
+      const cmd = getCommander();
+      // If toggling OFF and we had an extra pick used, trim to base
+      if (!state.commanderPoorLeadership && cmd) {
+        const basePicks = cmd.commanderRulePicks || 0;
+        if (state.commanderPickedRules.length > basePicks) {
+          state.commanderPickedRules = state.commanderPickedRules.slice(0, basePicks);
+        }
+      }
+      const card = document.getElementById('commanderCard');
+      card.innerHTML = renderCommanderCard(cmd);
+      attachRulePickerListeners();
+      renderSummary();
+    });
+  }
+
+  // Rule chips
+  document.querySelectorAll('.rule-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const rule = btn.dataset.rule;
+      const cmd = getCommander();
+      if (!cmd) return;
+      const basePicks = cmd.commanderRulePicks || 0;
+      const effectivePicks = basePicks + (state.commanderPoorLeadership ? 1 : 0);
+      const idx = state.commanderPickedRules.indexOf(rule);
+      if (idx >= 0) {
+        state.commanderPickedRules.splice(idx, 1);
+      } else if (state.commanderPickedRules.length < effectivePicks) {
+        state.commanderPickedRules.push(rule);
+      }
+      const card = document.getElementById('commanderCard');
+      card.innerHTML = renderCommanderCard(cmd);
+      attachRulePickerListeners();
+      renderSummary();
+    });
+  });
 }
 
 // ── RENDER: FORCE OPTIONS SECTION ──────────────────────────────────
@@ -538,6 +634,10 @@ function renderSummary() {
         <span class="summary-row-name">${cmd.name}</span>
         <span class="summary-row-pts">${cmd.pts}pts</span>
       </div>
+      ${(state.commanderPickedRules.length > 0 || state.commanderPoorLeadership) ? `
+      <div class="summary-row" style="opacity:0.75; font-size:0.8rem">
+        <span class="summary-row-name">${[...(state.commanderPoorLeadership ? ['Poor Leadership'] : []), ...state.commanderPickedRules].join(', ')}</span>
+      </div>` : ''}
     </div>
     ` : ''}
 

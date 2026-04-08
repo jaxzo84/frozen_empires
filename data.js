@@ -13,6 +13,15 @@ const NATIONALITIES = {
 // COMMANDERS
 // ─────────────────────────────────────────────────────────────────
 
+const COMMANDER_SPECIAL_RULES = {
+  DENMARK: ['Commodore', 'Booming Voice', 'Broadside!', 'Careful Planning', 'Expert Pilot', 'Expert Sailors', 'Impulsive', 'Sailing Master', 'Inspiring', 'Battle Hardened'],
+  SAXONY:  ['Castillian', 'Inspiring', 'Mobile', 'Battle Hardened', 'Bold', 'Lead by Example', 'Vendetta: Sweden'],
+  POLISH:  ['Inspiring', 'Ruthless', 'Aggressive Commander', 'Elan', 'Motivated', 'Swordsmen', 'Great Warrior'],
+  RUSSIA:  ['Commodore', 'Broadside!', 'Inspiring', 'Resilient', 'Lucky', 'Battle Hardened', 'Strict', 'Bold', 'Tough'],
+  SWEDEN:  ['Commodore', 'Broadside!', 'Inspiring', 'Elan', 'Tough', 'Cold Blooded', 'Brawlers'],
+  COSSACK: ['Cold Blooded', 'Guerilla Commander', 'Deadeye', 'Battle Hardened', 'Elan', 'Tough', 'Great Warrior'],
+};
+
 const COMMANDERS = {
 
   // DENMARK-NORWAY
@@ -24,13 +33,15 @@ const COMMANDERS = {
   },
   dn_experienced: {
     id: 'dn_experienced', name: 'Experienced Commander', nationality: NATIONALITIES.DENMARK,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Danish Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Danish Commander List'], commanderRuleList: 'DENMARK', commanderRulePicks: 1,
     canLead: ['Army of Denmark-Norway 1700-1721', 'Danish Royal Navy 1700-1721', 'Danish Privateers 1700-1721'],
     tier: 'standard'
   },
   dn_seasoned: {
     id: 'dn_seasoned', name: 'Seasoned Commander', nationality: NATIONALITIES.DENMARK,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Danish Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Danish Commander List'], commanderRuleList: 'DENMARK', commanderRulePicks: 2,
     canLead: ['Army of Denmark-Norway 1700-1721', 'Danish Royal Navy 1700-1721', 'Danish Privateers 1700-1721'],
     tier: 'standard'
   },
@@ -70,13 +81,15 @@ const COMMANDERS = {
   },
   sax_experienced: {
     id: 'sax_experienced', name: 'Experienced Saxon Commander', nationality: NATIONALITIES.SAXONY,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Saxon Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Saxon Commander List'], commanderRuleList: 'SAXONY', commanderRulePicks: 1,
     canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
     tier: 'standard'
   },
   sax_seasoned: {
     id: 'sax_seasoned', name: 'Seasoned Saxon Commander', nationality: NATIONALITIES.SAXONY,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Saxon Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Saxon Commander List'], commanderRuleList: 'SAXONY', commanderRulePicks: 2,
     canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
     tier: 'standard'
   },
@@ -88,13 +101,15 @@ const COMMANDERS = {
   },
   pol_experienced: {
     id: 'pol_experienced', name: 'Experienced Polish-Lithuanian Commander', nationality: NATIONALITIES.SAXONY,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Polish Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Polish Commander List'], commanderRuleList: 'POLISH', commanderRulePicks: 1,
     canLead: ['Polish-Lithuanian Army 1700-1721'],
     tier: 'standard'
   },
   pol_seasoned: {
     id: 'pol_seasoned', name: 'Seasoned Polish-Lithuanian Commander', nationality: NATIONALITIES.SAXONY,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Polish Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Polish Commander List'], commanderRuleList: 'POLISH', commanderRulePicks: 2,
     canLead: ['Polish-Lithuanian Army 1700-1721'],
     tier: 'standard'
   },
@@ -129,18 +144,21 @@ const COMMANDERS = {
   rus_untested: {
     id: 'rus_untested', name: 'Untested Russian Commander', nationality: NATIONALITIES.RUSSIA,
     pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    commanderRuleList: 'RUSSIA', commanderRulePicks: 0, poorLeadershipOption: true,
     canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
     tier: 'standard'
   },
   rus_experienced: {
     id: 'rus_experienced', name: 'Experienced Russian Commander', nationality: NATIONALITIES.RUSSIA,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Russian Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Russian Commander List'], commanderRuleList: 'RUSSIA', commanderRulePicks: 1, poorLeadershipOption: true,
     canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
     tier: 'standard'
   },
   rus_seasoned: {
     id: 'rus_seasoned', name: 'Seasoned Russian Commander', nationality: NATIONALITIES.RUSSIA,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Russian Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Russian Commander List'], commanderRuleList: 'RUSSIA', commanderRulePicks: 2, poorLeadershipOption: true,
     canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
     tier: 'standard'
   },
@@ -188,13 +206,15 @@ const COMMANDERS = {
   },
   swe_experienced: {
     id: 'swe_experienced', name: 'Experienced Swedish Commander', nationality: NATIONALITIES.SWEDEN,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Swedish Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Swedish Commander List'], commanderRuleList: 'SWEDEN', commanderRulePicks: 1,
     canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721', 'Swedish Royal Navy 1700-1721', 'Swedish Privateers'],
     tier: 'standard'
   },
   swe_seasoned: {
     id: 'swe_seasoned', name: 'Seasoned Swedish Commander', nationality: NATIONALITIES.SWEDEN,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Swedish Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Swedish Commander List'], commanderRuleList: 'SWEDEN', commanderRulePicks: 2,
     canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721', 'Swedish Royal Navy 1700-1721', 'Swedish Privateers'],
     tier: 'standard'
   },
@@ -256,13 +276,15 @@ const COMMANDERS = {
   },
   cos_experienced: {
     id: 'cos_experienced', name: 'Experienced Cossack Commander', nationality: NATIONALITIES.UNALIGNED,
-    pts: 10, commandRange: 8, commandPoints: 2, specialRules: ['1 from Unaligned Cossack Commander List'],
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Unaligned Cossack Commander List'], commanderRuleList: 'COSSACK', commanderRulePicks: 1,
     canLead: ['Cossack Raiding Party 1700-1721', 'Zaporozhian Sich 1700-1721'],
     tier: 'standard'
   },
   cos_seasoned: {
     id: 'cos_seasoned', name: 'Seasoned Cossack Commander', nationality: NATIONALITIES.UNALIGNED,
-    pts: 20, commandRange: 12, commandPoints: 2, specialRules: ['2 from Unaligned Cossack Commander List'],
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Unaligned Cossack Commander List'], commanderRuleList: 'COSSACK', commanderRulePicks: 2,
     canLead: ['Cossack Raiding Party 1700-1721', 'Zaporozhian Sich 1700-1721'],
     tier: 'standard'
   },
@@ -451,7 +473,7 @@ const UNITS = {
     fight: '6/7', shoot: '6/7', resolve: 5,
     specialRules: ['Drilled', 'Fast Reload'],
     options: [
-      'May be upgraded to Veteran for +1 pt/model',
+      'May be upgraded to Trained for +1 pt/model (note: starts Trained, upgrade to Veteran)',
       'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
     ],
     minModels: 4, maxModels: 12
@@ -708,6 +730,7 @@ const UNITS = {
     fight: '6/7', shoot: '6/7', resolve: 4,
     specialRules: ['Expertly Drilled (dismounted)', 'Quick (mounted)', 'War Cry'],
     options: [
+      'May be upgraded to Veteran (already Veteran — no upgrade)',
       '1 of 4 may carry Explosives at no cost',
       'Explosive carriers may exchange Dragoon Musket for Hand Mortar at no cost',
     ],
@@ -1067,12 +1090,12 @@ const FACTIONS = [
     nationality: NATIONALITIES.RUSSIA,
     description: 'Peter\'s personal force — the best trained and equipped regiment in Russia. So skilled that Charles XII of Sweden let them march back from Narva with banners unfurled.',
     forceSpecialRules: [
-      '⚠ Module rule states Fusilyory and Pikinyory must be upgraded to Veteran — but Fusilyory has no upgrade option on its unit card, and Pikinyory can only upgrade to Trained. Recommended house rule: Fusilyory count as Veteran, Pikinyory upgrade to Trained.',
-      'Pushkari must be upgraded to Trained (+1 pt/model).',
+      'Fusilyory and Pikinyory must be upgraded to Veteran.',
+      'Pushkari must be upgraded to Trained.',
       'All units gain the Unwavering Special Rule.',
       'If using Army Scale, only one Semyonovsky Company may be taken.',
-      'Commander may spend 2 CP to issue a platoon action to all Drilled units in Command Range.',
-      'Once per game, at the start of any turn, remove 1 Fatigue from all units.',
+      'Commander may spend 2 CP to issue platoon action to all Drilled units in Command Range.',
+      'Once per game, at the start of any turn, remove 1 point of fatigue from all units.',
     ],
     forceOptions: [],
     coreUnits: ['fusilyory', 'pikinyory', 'pushkari'],
@@ -1219,5 +1242,5 @@ const FACTIONS = [
 
 // Export for use in main app
 if (typeof module !== 'undefined') {
-  module.exports = { NATIONALITIES, COMMANDERS, UNITS, FACTIONS };
+  module.exports = { NATIONALITIES, COMMANDER_SPECIAL_RULES, COMMANDERS, UNITS, FACTIONS };
 }
