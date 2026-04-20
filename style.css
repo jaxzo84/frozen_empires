@@ -1158,3 +1158,16 @@ body {
 .poor-leadership-toggle strong {
   color: var(--red-dk);
 }
+
+/* ── COMMANDER RULE CHECKBOX LIST ── */
+.rule-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.25rem;
+}
+
+.option-checkbox-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

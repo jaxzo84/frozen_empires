@@ -21,10 +21,51 @@ function getFaction() { return state.factionId ? FACTIONS.find(f => f.id === sta
 function getCommander() { return state.commanderId ? COMMANDERS[state.commanderId] : null; }
 
 // ── POINTS ─────────────────────────────────────────────────────────
+
+// Parse a cost modifier from an option string.
+// Returns { perModel: number, flat: number }
+function parseOptionCost(optText) {
+  let perModel = 0, flat = 0;
+
+  // Match patterns like "+1 pt/model", "-1 pt/model", "+2 pts/model"
+  const perModelMatch = optText.match(/([+\-]?\d+)\s*pts?\/model/i);
+  if (perModelMatch) perModel = parseInt(perModelMatch[1]);
+
+  // Match patterns like "-4 pts (unit)", "+2 pts (not per model)"
+  const flatMatch = optText.match(/([+\-]?\d+)\s*pts?\s*(?:\(unit\)|\(not per model\))/i);
+  if (flatMatch) flat = parseInt(flatMatch[1]);
+
+  // Match "reduce unit cost by -4 pts" / "reduce the cost of the unit by 4 points"
+  if (!flat) {
+    const reduceMatch = optText.match(/reduce.*?cost.*?by\s*([+\-]?\d+)\s*pts?/i);
+    if (reduceMatch) flat = parseInt(reduceMatch[1]);
+  }
+
+  // Match trailing " for -1 pt (" style (e.g. Dragoon Muskets for -1 pt (note...))
+  if (!perModel && !flat) {
+    const forPtMatch = optText.match(/for\s+([+\-]\d+)\s*pts?\s*\(/i);
+    if (forPtMatch) flat = parseInt(forPtMatch[1]);
+  }
+
+  return { perModel, flat };
+}
+
 function calcUnitPts(rosterUnit) {
   const unit = UNITS[rosterUnit.unitId];
   if (!unit) return 0;
-  return unit.ptsPerModel * rosterUnit.modelCount;
+
+  let ptsPerModel = unit.ptsPerModel;
+  let flatMod = 0;
+
+  (rosterUnit.selectedOptions || []).forEach(idx => {
+    const optText = unit.options[idx];
+    if (!optText) return;
+    const { perModel, flat } = parseOptionCost(optText);
+    ptsPerModel += perModel;
+    flatMod += flat;
+  });
+
+  return Math.max(0, ptsPerModel * rosterUnit.modelCount + flatMod);
 }
 
 function calcCommanderPts() {
@@ -145,48 +186,46 @@ function renderCommanderCard(cmd) {
   const tierColors = { standard: 'tier-standard', historic: 'tier-historic', legendary: 'tier-legendary' };
   const tierLabel = { standard: 'Standard', historic: 'Historic', legendary: 'Legendary' };
 
-  // Calculate effective picks (Poor Leadership gives +1)
   const basePicks = cmd.commanderRulePicks || 0;
   const poorLeadershipActive = cmd.poorLeadershipOption && state.commanderPoorLeadership;
   const effectivePicks = basePicks + (poorLeadershipActive ? 1 : 0);
 
-  // Build the special rules section
   let rulesHtml = '';
-  if (cmd.commanderRuleList && (effectivePicks > 0 || cmd.poorLeadershipOption)) {
+
+  if (cmd.commanderRuleList) {
     const available = COMMANDER_SPECIAL_RULES[cmd.commanderRuleList] || [];
     const chosen = state.commanderPickedRules;
 
-    // Poor Leadership toggle
     const plToggle = cmd.poorLeadershipOption ? `
       <label class="poor-leadership-toggle">
         <input type="checkbox" id="poorLeadershipCheck" ${poorLeadershipActive ? 'checked' : ''}>
-        <span>Take <strong>Poor Leadership</strong> for +1 extra rule</span>
+        <span>Take <strong>Poor Leadership</strong> for +1 extra rule pick</span>
       </label>
     ` : '';
 
-    // Rule chips (only if there are picks available)
-    let chipsHtml = '';
-    if (effectivePicks > 0) {
-      chipsHtml = `
-        <div class="rule-picker-label">
-          Choose ${effectivePicks} Special Rule${effectivePicks > 1 ? 's' : ''}
-          <span class="rule-picker-count ${chosen.length === effectivePicks ? 'count-done' : ''}">${chosen.length}/${effectivePicks}</span>
-        </div>
-        <div class="rule-picker-chips">
-          ${available.map(rule => {
-            const isChosen = chosen.includes(rule);
-            const isDisabled = !isChosen && chosen.length >= effectivePicks;
-            return `<button class="rule-chip ${isChosen ? 'rule-chip-on' : ''} ${isDisabled ? 'rule-chip-disabled' : ''}"
-              data-rule="${rule}" ${isDisabled ? 'disabled' : ''}>${rule}</button>`;
-          }).join('')}
-        </div>
-        ${chosen.length > 0 ? `<div class="rule-picker-chosen"><em>Rules:</em> ${poorLeadershipActive ? 'Poor Leadership, ' : ''}${chosen.join(', ')}</div>` : (poorLeadershipActive ? `<div class="rule-picker-chosen"><em>Rules:</em> Poor Leadership</div>` : '')}
-      `;
-    } else if (poorLeadershipActive) {
-      chipsHtml = `<div class="rule-picker-chosen"><em>Rules:</em> Poor Leadership</div>`;
-    }
+    const pickerLabel = effectivePicks > 0 ? `
+      <div class="rule-picker-label">
+        Commander Options
+        <span class="rule-picker-count ${chosen.length === effectivePicks ? 'count-done' : ''}">${chosen.length}/${effectivePicks}</span>
+      </div>` : `<div class="rule-picker-label">Commander Options</div>`;
 
-    rulesHtml = `<div class="commander-rule-picker">${plToggle}${chipsHtml}</div>`;
+    const checkboxes = available.map(rule => {
+      const isChosen = chosen.includes(rule);
+      const isDisabled = effectivePicks === 0 || (!isChosen && chosen.length >= effectivePicks);
+      return `
+        <label class="option-checkbox ${isDisabled ? 'option-checkbox-disabled' : ''}">
+          <input type="checkbox" class="rule-chip-cb" data-rule="${rule}"
+            ${isChosen ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
+          <span>${rule}</span>
+        </label>`;
+    }).join('');
+
+    rulesHtml = `
+      <div class="commander-rule-picker">
+        ${plToggle}
+        ${pickerLabel}
+        <div class="rule-checkbox-list">${checkboxes}</div>
+      </div>`;
 
   } else if (cmd.specialRules && cmd.specialRules.length) {
     rulesHtml = `<div class="commander-rules"><em>Rules:</em> ${cmd.specialRules.join(', ')}</div>`;
@@ -223,7 +262,6 @@ function attachRulePickerListeners() {
     plCheck.addEventListener('change', () => {
       state.commanderPoorLeadership = plCheck.checked;
       const cmd = getCommander();
-      // If toggling OFF and we had an extra pick used, trim to base
       if (!state.commanderPoorLeadership && cmd) {
         const basePicks = cmd.commanderRulePicks || 0;
         if (state.commanderPickedRules.length > basePicks) {
@@ -237,19 +275,25 @@ function attachRulePickerListeners() {
     });
   }
 
-  // Rule chips
-  document.querySelectorAll('.rule-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const rule = btn.dataset.rule;
+  // Rule checkboxes
+  document.querySelectorAll('.rule-chip-cb').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const rule = cb.dataset.rule;
       const cmd = getCommander();
       if (!cmd) return;
       const basePicks = cmd.commanderRulePicks || 0;
       const effectivePicks = basePicks + (state.commanderPoorLeadership ? 1 : 0);
       const idx = state.commanderPickedRules.indexOf(rule);
-      if (idx >= 0) {
-        state.commanderPickedRules.splice(idx, 1);
-      } else if (state.commanderPickedRules.length < effectivePicks) {
-        state.commanderPickedRules.push(rule);
+      if (!cb.checked) {
+        if (idx >= 0) state.commanderPickedRules.splice(idx, 1);
+      } else {
+        if (idx < 0 && state.commanderPickedRules.length < effectivePicks) {
+          state.commanderPickedRules.push(rule);
+        } else if (state.commanderPickedRules.length >= effectivePicks) {
+          // Can't pick more — revert the checkbox
+          cb.checked = false;
+          return;
+        }
       }
       const card = document.getElementById('commanderCard');
       card.innerHTML = renderCommanderCard(cmd);
@@ -491,11 +535,15 @@ function openUnitModal(ruid) {
     </div>
   `;
 
-  // Live pts preview
-  document.getElementById('modalModelCount').addEventListener('input', (e) => {
-    const count = Math.max(unit.minModels || 4, Math.min(unit.maxModels || 20, parseInt(e.target.value) || 0));
-    document.getElementById('modalPtsPreview').textContent = (unit.ptsPerModel * count) + 'pts';
-  });
+  // Live pts preview — recalculates from current checkbox state + model count
+  function refreshModalPts() {
+    const count = Math.max(unit.minModels || 4, Math.min(unit.maxModels || 20,
+      parseInt(document.getElementById('modalModelCount').value) || unit.minModels || 4));
+    const preview = calcUnitPts({ ...ru, modelCount: count });
+    document.getElementById('modalPtsPreview').textContent = preview + 'pts';
+  }
+
+  document.getElementById('modalModelCount').addEventListener('input', refreshModalPts);
 
   // Track option selections
   body.querySelectorAll('input[data-opt]').forEach(cb => {
@@ -507,6 +555,7 @@ function openUnitModal(ruid) {
       } else {
         ru.selectedOptions = ru.selectedOptions.filter(i => i !== idx);
       }
+      refreshModalPts();
     });
   });
 
