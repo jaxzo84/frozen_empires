@@ -7,7 +7,1182 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+/* ================================================================
+   FROZEN EMPIRES — Force Builder Stylesheet
+   Aesthetic: Historical military document — aged parchment, dark iron, brass
+   ================================================================ */
+
+:root {
+  --parchment:    #f4edd8;
+  --parchment-dk: #e8dbc0;
+  --parchment-lt: #faf6ec;
+  --ink:          #1a1208;
+  --ink-faded:    #4a3d28;
+  --ink-muted:    #8a7a60;
+  --iron:         #2a2620;
+  --iron-mid:     #3d3730;
+  --iron-lt:      #554d42;
+  --brass:        #c09040;
+  --brass-lt:     #d4a84e;
+  --brass-dk:     #906030;
+  --red:          #8b1a1a;
+  --red-lt:       #a82020;
+  --core-blue:    #1a3a5c;
+  --support-gold: #7a5a10;
+  --border:       rgba(150, 120, 60, 0.35);
+  --border-dk:    rgba(150, 120, 60, 0.6);
+  --shadow:       0 2px 12px rgba(0,0,0,0.25);
+  --radius:       3px;
+  --font-display: 'Cinzel', serif;
+  --font-body:    'EB Garamond', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--iron);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse at 20% 80%, rgba(90,70,40,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(60,50,30,0.2) 0%, transparent 60%);
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--iron);
+  border-bottom: 2px solid var(--brass);
+  padding: 0.75rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.header-eyebrow {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--brass);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--parchment);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(192, 144, 64, 0.4);
+}
+
+.header-subtitle {
+  font-family: var(--font-body);
+  color: var(--brass);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.points-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(192,144,64,0.12);
+  border: 1px solid var(--brass);
+  border-radius: var(--radius);
+  padding: 0.4rem 1.2rem;
+}
+
+.points-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brass);
+}
+
+.points-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--parchment-lt);
+  line-height: 1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── LAYOUT ── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 0;
+  flex: 1;
+  height: calc(100vh - 76px);
+  overflow: hidden;
+}
+
+/* ── PANELS ── */
+.panel {
+  background: var(--parchment);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  gap: 0;
+}
+
+.panel-left {
+  border-right: 1px solid var(--border-dk);
+  background: var(--parchment-dk);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23e8dbc0'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%23e0d0b0' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+.panel-right {
+  border-left: 1px solid var(--border-dk);
+  background: var(--parchment-dk);
+}
+
+.panel-center {
+  background: var(--parchment-lt);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-faded);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.panel-header .panel-title {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── FORM ELEMENTS ── */
+.form-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 0.4rem;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border-dk);
+  border-radius: var(--radius);
+  background: var(--parchment-lt);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7a60'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  transition: border-color 0.15s;
+}
+
+.form-select:focus, .form-input:focus {
+  outline: none;
+  border-color: var(--brass);
+  box-shadow: 0 0 0 2px rgba(192,144,64,0.2);
+}
+
+.form-input {
+  background-image: none;
+  padding-right: 0.6rem;
+}
+
+.inline-select {
+  width: auto;
+  flex: 1;
+  min-width: 100px;
+}
+
+/* ── SETUP SECTIONS ── */
+.setup-section {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.setup-section:last-child { border-bottom: none; }
+
+/* ── NATIONALITY GRID ── */
+.nationality-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.nat-btn {
+  padding: 0.5rem 0.4rem;
+  border: 1px solid var(--border-dk);
+  border-radius: var(--radius);
+  background: var(--parchment-lt);
+  color: var(--ink-faded);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.nat-btn:hover {
+  border-color: var(--brass);
+  background: var(--parchment);
+  color: var(--ink);
+}
+
+.nat-btn.active {
+  background: var(--iron);
+  color: var(--brass);
+  border-color: var(--brass);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ── FACTION INFO ── */
+.faction-info {
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--ink-faded);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── COMMANDER CARD ── */
+.commander-card {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: var(--iron);
+  border-radius: var(--radius);
+  border: 1px solid var(--brass);
+  color: var(--parchment);
+}
+
+.commander-name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brass-lt);
+  margin-bottom: 0.35rem;
+}
+
+.commander-tier {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  margin-bottom: 0.4rem;
+}
+
+.tier-standard { background: rgba(100,100,100,0.3); color: #aaa; }
+.tier-historic  { background: rgba(192,144,64,0.25); color: var(--brass-lt); }
+.tier-legendary { background: rgba(139,26,26,0.4); color: #e88; }
+
+.commander-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  margin: 0.5rem 0;
+}
+
+.stat-box {
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  padding: 0.25rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.55rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--parchment);
+}
+
+.commander-rules {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--parchment-dk);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.commander-bio {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  font-style: italic;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 0.4rem;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  padding: 0.45rem 1rem;
+  background: var(--iron);
+  color: var(--brass-lt);
+  border: 1px solid var(--brass);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: var(--brass-dk);
+  color: var(--parchment);
+}
+
+.btn-secondary {
+  padding: 0.45rem 1rem;
+  background: transparent;
+  color: var(--ink-faded);
+  border: 1px solid var(--border-dk);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover { border-color: var(--brass); color: var(--ink); }
+
+.btn-danger {
+  padding: 0.45rem 1rem;
+  background: transparent;
+  color: var(--red);
+  border: 1px solid var(--red);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-danger:hover { background: var(--red); color: var(--parchment); }
+
+.btn-icon {
+  padding: 0.4rem 0.75rem;
+  background: rgba(255,255,255,0.05);
+  color: var(--brass);
+  border: 1px solid rgba(192,144,64,0.35);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-icon:hover { background: rgba(192,144,64,0.15); border-color: var(--brass); }
+
+/* ── UNIT ADD CONTROLS ── */
+.unit-add-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  flex: 1;
+  color: var(--ink-muted);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-style: italic;
+  font-size: 0.9rem;
+  max-width: 250px;
+  line-height: 1.6;
+}
+
+/* ── ROSTER LIST ── */
+.roster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.roster-section-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--border);
+  margin-top: 0.4rem;
+}
+
+/* ── ROSTER UNIT CARD ── */
+.roster-unit {
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+
+.roster-unit:hover {
+  border-color: var(--brass);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.roster-unit.type-core { border-left: 3px solid var(--core-blue); }
+.roster-unit.type-support { border-left: 3px solid var(--support-gold); }
+
+.unit-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0,0,0,0.03);
+  border-bottom: 1px solid var(--border);
+}
+
+.unit-card-name {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.unit-type-badge {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+}
+
+.badge-core { background: rgba(26,58,92,0.15); color: var(--core-blue); }
+.badge-support { background: rgba(122,90,16,0.15); color: var(--support-gold); }
+
+.unit-card-body {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.unit-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.3rem 1rem;
+  flex-shrink: 0;
+}
+
+.unit-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unit-stat .stat-label { font-size: 0.5rem; color: var(--ink-muted); }
+.unit-stat .stat-value { font-family: var(--font-display); font-size: 0.85rem; color: var(--ink); }
+
+.unit-card-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.unit-rules-mini {
+  font-size: 0.72rem;
+  color: var(--ink-faded);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.unit-card-footer {
+  padding: 0.4rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.02);
+}
+
+.model-count-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.count-btn {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--border-dk);
+  border-radius: 2px;
+  background: var(--parchment-lt);
+  color: var(--ink-faded);
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+}
+
+.count-btn:hover { background: var(--iron); color: var(--parchment); border-color: var(--iron); }
+
+.count-display {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.unit-pts-display {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.unit-pts-display span {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+/* ── UNIT LIBRARY (RIGHT PANEL) ── */
+.search-bar { margin-bottom: 0.75rem; }
+
+.unit-library {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lib-unit-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.lib-unit-card:hover { border-color: var(--brass); }
+
+.lib-unit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.6rem;
+  background: rgba(0,0,0,0.04);
+  border-bottom: 1px solid var(--border);
+}
+
+.lib-unit-name {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lib-unit-pts {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--brass-dk);
+  font-weight: 700;
+}
+
+.lib-unit-body {
+  padding: 0.35rem 0.6rem;
+}
+
+.lib-unit-exp {
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.2rem;
+  font-style: italic;
+}
+
+.lib-unit-rules {
+  font-size: 0.68rem;
+  color: var(--ink-faded);
+  line-height: 1.4;
+}
+
+.lib-unit-stats {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.02);
+}
+
+.lib-stat {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--ink-faded);
+}
+
+.lib-stat strong { color: var(--ink); font-weight: 700; }
+
+/* ── TABS ── */
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--border-dk);
+  margin-bottom: 1rem;
+  gap: 0;
+}
+
+.tab {
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: -1px;
+}
+
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--ink); border-bottom-color: var(--brass); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── SUMMARY ── */
+.summary-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-section { }
+
+.summary-title {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.2rem 0;
+  font-size: 0.82rem;
+  border-bottom: 1px dotted rgba(150,120,60,0.2);
+}
+
+.summary-row:last-child { border-bottom: none; }
+
+.summary-row-name { color: var(--ink); }
+.summary-row-pts { font-family: var(--font-display); font-weight: 600; color: var(--ink-faded); }
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.5rem;
+  background: var(--iron);
+  border-radius: var(--radius);
+  color: var(--parchment);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.summary-total-val { color: var(--brass-lt); }
+
+/* ── RULES PANEL ── */
+.rules-section-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+
+.faction-rule-item {
+  font-size: 0.8rem;
+  color: var(--ink-faded);
+  line-height: 1.5;
+  padding: 0.3rem 0;
+  border-bottom: 1px dotted rgba(150,120,60,0.2);
+}
+
+.faction-rule-item:last-child { border-bottom: none; }
+
+.rules-glossary { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.rule-entry {
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  line-height: 1.5;
+  padding: 0.3rem 0;
+  border-bottom: 1px dotted rgba(150,120,60,0.15);
+}
+
+.rule-entry strong { color: var(--ink); }
+
+.muted {
+  color: var(--ink-muted);
+  font-style: italic;
+  font-size: 0.82rem;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,16,8,0.75);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--parchment);
+  border: 1px solid var(--brass);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-wide { max-width: 720px; }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.2rem;
+  border-bottom: 1px solid var(--border-dk);
+  background: var(--iron);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass-lt);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--ink-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  color: var(--brass);
+  transition: color 0.12s;
+}
+
+.modal-close:hover { color: var(--parchment); }
+
+.modal-body {
+  padding: 1.2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 0.85rem 1.2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* ── MODAL UNIT EDITOR ── */
+.unit-editor-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--iron);
+  border-radius: var(--radius);
+  border: 1px solid var(--brass);
+}
+
+.editor-stat {
+  text-align: center;
+  color: var(--parchment);
+}
+
+.editor-stat .stat-label { color: var(--ink-muted); font-size: 0.6rem; }
+.editor-stat .stat-value { font-family: var(--font-display); font-size: 1.1rem; color: var(--parchment); }
+
+.unit-editor-section {
+  margin-bottom: 1rem;
+}
+
+.unit-editor-section-title {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.option-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.82rem;
+  color: var(--ink-faded);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.option-checkbox input[type="checkbox"] {
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  accent-color: var(--brass-dk);
+}
+
+.model-count-editor {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.model-count-editor label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+}
+
+.model-count-editor input[type="number"] {
+  width: 70px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border-dk);
+  border-radius: var(--radius);
+  background: var(--parchment-lt);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+.pts-preview {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-left: auto;
+}
+
+/* ── EXPORT TEXTAREA ── */
+.export-textarea {
+  width: 100%;
+  height: 320px;
+  padding: 0.75rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--parchment-lt);
+  border: 1px solid var(--border-dk);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+/* ── FORCE OPTIONS (LEFT PANEL) ── */
+.force-option-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.8rem;
+  color: var(--ink-faded);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.force-option-item input { margin-top: 0.15rem; flex-shrink: 0; accent-color: var(--brass-dk); }
+
+/* ── SCROLLBAR STYLING ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--parchment-dk); }
+::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brass-dk); }
+
+/* ── DECORATIVE DIVIDERS ── */
+.ornament-divider {
+  text-align: center;
+  color: var(--brass);
+  font-size: 0.85rem;
+  opacity: 0.5;
+  margin: 0.5rem 0;
+  letter-spacing: 0.5rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .app-layout { grid-template-columns: 250px 1fr 280px; }
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  .panel { max-height: none; overflow: visible; }
+  .panel-left, .panel-right {
+    border: none;
+    border-bottom: 1px solid var(--border-dk);
+  }
+}
+
+/* ── COMMANDER RULE PICKER ── */
+.commander-rule-picker {
+  margin-top: 0.6rem;
+}
+
+.rule-picker-label {
+  font-size: 0.75rem;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rule-picker-count {
+  background: var(--border-dk);
+  color: var(--ink-faded);
+  border-radius: 999px;
+  padding: 0.05em 0.5em;
+  font-size: 0.7rem;
+  font-family: var(--font-body);
+}
+
+.rule-picker-count.count-done {
+  background: var(--brass-dk);
+  color: var(--parchment);
+}
+
+.rule-picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.rule-chip {
+  background: transparent;
+  border: 1px solid var(--border-dk);
+  color: var(--ink-faded);
+  border-radius: 4px;
+  padding: 0.2em 0.55em;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rule-chip:hover:not(:disabled) {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.rule-chip-on {
+  background: var(--brass-dk);
+  border-color: var(--brass);
+  color: var(--parchment);
+  font-weight: 500;
+}
+
+.rule-chip-on:hover {
+  background: var(--red-dk);
+  border-color: var(--red-dk);
+  color: var(--parchment);
+}
+
+.rule-chip-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.rule-picker-chosen {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--brass);
+}
+
+/* ── POOR LEADERSHIP TOGGLE ── */
+.poor-leadership-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  padding: 0.35rem 0.5rem;
+  border: 1px dashed var(--border-dk);
+  border-radius: 4px;
+  transition: border-color 0.15s;
+}
+
+.poor-leadership-toggle:hover {
+  border-color: var(--brass);
+  color: var(--ink-mid);
+}
+
+.poor-leadership-toggle input[type="checkbox"] {
+  accent-color: var(--brass-dk);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.poor-leadership-toggle strong {
+  color: var(--red-dk);
+}
+
+/* ── COMMANDER RULE CHECKBOX LIST ── */
+.rule-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.25rem;
+}
+
+.option-checkbox-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+</style>
 </head>
 <body>
 
@@ -200,7 +1375,2148 @@
     </div>
   </div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script>
+// Frozen Empires: Great Northern War — Force Builder Data
+// Based on the unofficial Blood & Plunder module by Dan Carlson
+
+const NATIONALITIES = {
+  DENMARK: 'Denmark-Norway',
+  SAXONY: 'Saxony & Polish-Lithuanian Commonwealth',
+  RUSSIA: 'Russia',
+  SWEDEN: 'Sweden',
+  UNALIGNED: 'Unaligned (Cossack)',
+};
+
+// ─────────────────────────────────────────────────────────────────
+// COMMANDERS
+// ─────────────────────────────────────────────────────────────────
+
+const COMMANDER_SPECIAL_RULES = {
+  DENMARK: ['Commodore', 'Booming Voice', 'Broadside!', 'Careful Planning', 'Expert Pilot', 'Expert Sailors', 'Impulsive', 'Sailing Master', 'Inspiring', 'Battle Hardened'],
+  SAXONY:  ['Castillian', 'Inspiring', 'Mobile', 'Battle Hardened', 'Bold', 'Lead by Example', 'Vendetta: Sweden'],
+  POLISH:  ['Inspiring', 'Ruthless', 'Aggressive Commander', 'Elan', 'Motivated', 'Swordsmen', 'Great Warrior'],
+  RUSSIA:  ['Commodore', 'Broadside!', 'Inspiring', 'Resilient', 'Lucky', 'Battle Hardened', 'Strict', 'Bold', 'Tough'],
+  SWEDEN:  ['Commodore', 'Broadside!', 'Inspiring', 'Elan', 'Tough', 'Cold Blooded', 'Brawlers'],
+  COSSACK: ['Cold Blooded', 'Guerilla Commander', 'Deadeye', 'Battle Hardened', 'Elan', 'Tough', 'Great Warrior'],
+};
+
+const COMMANDERS = {
+
+  // DENMARK-NORWAY
+  dn_untested: {
+    id: 'dn_untested', name: 'Untested Commander', nationality: NATIONALITIES.DENMARK,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    canLead: ['Army of Denmark-Norway 1700-1721', 'Danish Royal Navy 1700-1721', 'Danish Privateers 1700-1721'],
+    tier: 'standard'
+  },
+  dn_experienced: {
+    id: 'dn_experienced', name: 'Experienced Commander', nationality: NATIONALITIES.DENMARK,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Danish Commander List'], commanderRuleList: 'DENMARK', commanderRulePicks: 1,
+    canLead: ['Army of Denmark-Norway 1700-1721', 'Danish Royal Navy 1700-1721', 'Danish Privateers 1700-1721'],
+    tier: 'standard'
+  },
+  dn_seasoned: {
+    id: 'dn_seasoned', name: 'Seasoned Commander', nationality: NATIONALITIES.DENMARK,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Danish Commander List'], commanderRuleList: 'DENMARK', commanderRulePicks: 2,
+    canLead: ['Army of Denmark-Norway 1700-1721', 'Danish Royal Navy 1700-1721', 'Danish Privateers 1700-1721'],
+    tier: 'standard'
+  },
+  jens_rostgaard: {
+    id: 'jens_rostgaard', name: 'Jens Rostgaard', nationality: NATIONALITIES.DENMARK,
+    pts: 14, commandRange: 12, commandPoints: 2, specialRules: ['Strict'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Army of Denmark-Norway 1700-1721'],
+    tier: 'historic',
+    bio: 'From a peasant family, commanded militia at the Landing at Humlebæk. Also known for compiling Copenhagen\'s history.'
+  },
+  tordenskiold: {
+    id: 'tordenskiold', name: 'Peder Jansen Wessel "Tordenskiold"', nationality: NATIONALITIES.DENMARK,
+    pts: 32, commandRange: 16, commandPoints: 3, specialRules: ['Commodore', 'Sailing Master', 'Unwavering', 'Broadside!', 'Gunnery Captain'],
+    mainWeapons: 'Brace of Pistols, Standard Melee Weapon',
+    canLead: ['Danish Royal Navy 1700-1721'],
+    tier: 'legendary',
+    bio: 'One of the finest naval commanders ever produced by Denmark-Norway. Famous for a 14-hour duel with a Swedish frigate.'
+  },
+  frederick_iv: {
+    id: 'frederick_iv', name: 'Frederick IV', nationality: NATIONALITIES.DENMARK,
+    pts: 32, commandRange: 20, commandPoints: 3,
+    specialRules: ['Autocrat', 'Inspiring', 'Careful Planning', 'Field Gun', 'Expert Artillery Crew', 'God\'s Blessing or the Devil\'s Luck', 'Evade (only while mounted)'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Army of Denmark-Norway 1700-1721'],
+    tier: 'legendary',
+    notes: 'May join support unit only if mounted at start and is a Danish-Norwegian unit.',
+    bio: 'King of Denmark during the GNW. Commanded troops at the Battle of Gadebusch. Abolished serfdom in 1702.'
+  },
+
+  // SAXONY / POLISH-LITHUANIAN
+  sax_untested: {
+    id: 'sax_untested', name: 'Untested Saxon Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  sax_experienced: {
+    id: 'sax_experienced', name: 'Experienced Saxon Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Saxon Commander List'], commanderRuleList: 'SAXONY', commanderRulePicks: 1,
+    canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  sax_seasoned: {
+    id: 'sax_seasoned', name: 'Seasoned Saxon Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Saxon Commander List'], commanderRuleList: 'SAXONY', commanderRulePicks: 2,
+    canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  pol_untested: {
+    id: 'pol_untested', name: 'Untested Polish-Lithuanian Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    canLead: ['Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  pol_experienced: {
+    id: 'pol_experienced', name: 'Experienced Polish-Lithuanian Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Polish Commander List'], commanderRuleList: 'POLISH', commanderRulePicks: 1,
+    canLead: ['Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  pol_seasoned: {
+    id: 'pol_seasoned', name: 'Seasoned Polish-Lithuanian Commander', nationality: NATIONALITIES.SAXONY,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Polish Commander List'], commanderRuleList: 'POLISH', commanderRulePicks: 2,
+    canLead: ['Polish-Lithuanian Army 1700-1721'],
+    tier: 'standard'
+  },
+  heinrich_steinau: {
+    id: 'heinrich_steinau', name: 'Heinrich von Steinau', nationality: NATIONALITIES.SAXONY,
+    pts: 15, commandRange: 12, commandPoints: 2, specialRules: ['Careful Planning'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Army of Saxony 1682-1716'],
+    tier: 'historic',
+    bio: 'Veteran of the War of the Grand Alliance. Won at Jungfernhof but was captured after the battle at Pułtusk.'
+  },
+  schulenburg: {
+    id: 'schulenburg', name: 'Johann Matthias von der Schulenburg', nationality: NATIONALITIES.SAXONY,
+    pts: 20, commandRange: 16, commandPoints: 2, specialRules: ['Vast Experience', 'Inspiring'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Army of Saxony 1682-1716'],
+    tier: 'historic',
+    bio: 'Eccentric art collector and lifetime mercenary. Fought in the GNW, War of Spanish Succession, and the Seventh Ottoman-Venetian War.'
+  },
+  augustus_ii: {
+    id: 'augustus_ii', name: 'Augustus II "the Strong"', nationality: NATIONALITIES.SAXONY,
+    pts: 32, commandRange: 16, commandPoints: 3,
+    specialRules: ['Autocrat', 'Very Inspiring', 'Tough', 'Motivated', 'Resilient'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Army of Saxony 1682-1716', 'Polish-Lithuanian Army 1700-1721'],
+    tier: 'legendary',
+    notes: 'May join support unit only if mounted at start and is a Saxon unit.',
+    bio: 'Elector of Saxony and King of Poland. Famous for bending horseshoes with his bare hands. His harassment of Sweden gave Russia time to reorganize.'
+  },
+
+  // RUSSIA
+  rus_untested: {
+    id: 'rus_untested', name: 'Untested Russian Commander', nationality: NATIONALITIES.RUSSIA,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    commanderRuleList: 'RUSSIA', commanderRulePicks: 0, poorLeadershipOption: true,
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
+    tier: 'standard'
+  },
+  rus_experienced: {
+    id: 'rus_experienced', name: 'Experienced Russian Commander', nationality: NATIONALITIES.RUSSIA,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Russian Commander List'], commanderRuleList: 'RUSSIA', commanderRulePicks: 1, poorLeadershipOption: true,
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
+    tier: 'standard'
+  },
+  rus_seasoned: {
+    id: 'rus_seasoned', name: 'Seasoned Russian Commander', nationality: NATIONALITIES.RUSSIA,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Russian Commander List'], commanderRuleList: 'RUSSIA', commanderRulePicks: 2, poorLeadershipOption: true,
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)', 'Russian Privateers (1700-1721)'],
+    tier: 'standard'
+  },
+  sheremetev: {
+    id: 'sheremetev', name: 'Count Boris Sheremetev', nationality: NATIONALITIES.RUSSIA,
+    pts: 15, commandRange: 12, commandPoints: 2, specialRules: ['Inspiring', 'Reactive Commander'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721"],
+    tier: 'historic',
+    bio: 'Most senior Russian officer in the GNW. Often sluggish in command but commanded at Poltava. Known for reacting to the enemy rather than planning ahead.'
+  },
+  menshikov: {
+    id: 'menshikov', name: 'Prince Aleksander Menshikov', nationality: NATIONALITIES.RUSSIA,
+    pts: 9, commandRange: 12, commandPoints: 1, specialRules: ['Aggressive Commander', 'Impulsive', 'High Standing'],
+    mainWeapons: 'Brace of Pistols and Standard Melee Weapon',
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721"],
+    tier: 'historic',
+    bio: 'Witty, charming, inexperienced, and hilariously corrupt. Defrauded the Tsar out of 100,000 rubles and was eventually exiled to Siberia.'
+  },
+  zmajevic: {
+    id: 'zmajevic', name: 'Matija Zmajević', nationality: NATIONALITIES.RUSSIA,
+    pts: 25, commandRange: 16, commandPoints: 2, specialRules: ['Commodore', 'Broadside!', 'Sailing Master', 'Shipwright'],
+    mainWeapons: 'Brace of Pistols and Standard Melee Weapon',
+    canLead: ['Russian Imperial Navy (1700-1755)'],
+    tier: 'historic',
+    bio: 'Shipbuilder turned admiral who led the Russian navy to victory at Gangut. Praised as a naval tactician and key in creating the Russian navy.'
+  },
+  peter_i: {
+    id: 'peter_i', name: 'Peter I "the Great"', nationality: NATIONALITIES.RUSSIA,
+    pts: 32, commandRange: 20, commandPoints: 3,
+    specialRules: ['Very Inspiring', 'Commodore', "God's Blessing or Devil's Luck", 'Strict', 'Autocrat'],
+    mainWeapons: 'Brace of Pistols and Standard Melee Weapon',
+    canLead: ['Old Russian Army 1686-1705', "Peter's New Model Army 1705-1721", 'Semyonovsky Lifeguard Regiment 1700-1721', 'Russian Imperial Navy (1700-1755)'],
+    tier: 'legendary',
+    notes: 'May join support unit only if mounted at start and is a Russian unit.',
+    bio: 'The 6\'9" Tsar who dragged Russia into the modern era. Obsessed with ships, built the Russian navy, and learned from every defeat. Died after swimming into icy water to save drowning soldiers.'
+  },
+
+  // SWEDEN
+  swe_untested: {
+    id: 'swe_untested', name: 'Untested Swedish Commander', nationality: NATIONALITIES.SWEDEN,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721', 'Swedish Royal Navy 1700-1721', 'Swedish Privateers'],
+    tier: 'standard'
+  },
+  swe_experienced: {
+    id: 'swe_experienced', name: 'Experienced Swedish Commander', nationality: NATIONALITIES.SWEDEN,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Swedish Commander List'], commanderRuleList: 'SWEDEN', commanderRulePicks: 1,
+    canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721', 'Swedish Royal Navy 1700-1721', 'Swedish Privateers'],
+    tier: 'standard'
+  },
+  swe_seasoned: {
+    id: 'swe_seasoned', name: 'Seasoned Swedish Commander', nationality: NATIONALITIES.SWEDEN,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Swedish Commander List'], commanderRuleList: 'SWEDEN', commanderRulePicks: 2,
+    canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721', 'Swedish Royal Navy 1700-1721', 'Swedish Privateers'],
+    tier: 'standard'
+  },
+  stenbock: {
+    id: 'stenbock', name: 'Magnus Stenbock', nationality: NATIONALITIES.SWEDEN,
+    pts: 15, commandRange: 8, commandPoints: 1, specialRules: ['Elan', 'Resilient'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Swedish Army 1700-1721'],
+    tier: 'historic',
+    bio: 'Field marshal and director of the General War Commissariat. Defeated a Saxon-Danish army at Gadebusch but was captured at the Siege of Tönning.'
+  },
+  rehnskiold: {
+    id: 'rehnskiold', name: 'Carl Gustav Rehnskiold', nationality: NATIONALITIES.SWEDEN,
+    pts: 25, commandRange: 16, commandPoints: 2, specialRules: ['Vast Experience', 'Very Inspiring'],
+    mainWeapons: 'Pistol and Standard Melee Weapon',
+    canLead: ['Swedish Army 1700-1721'],
+    tier: 'historic',
+    bio: 'Advisor, mentor, and commander-in-chief under Charles XII. Captured at Poltava, spent the war caring for Swedish prisoners.'
+  },
+  stromstierna: {
+    id: 'stromstierna', name: 'Olof Stromstierna', nationality: NATIONALITIES.SWEDEN,
+    pts: 15, commandRange: 8, commandPoints: 2, specialRules: ['Expert Sailors', 'Broadside!', 'Strict'],
+    mainWeapons: 'Brace of Pistols and Standard Melee Weapon',
+    canLead: ['Swedish Royal Navy 1700-1721'],
+    tier: 'historic',
+    bio: 'First served in the Netherlands and traveled to the New World. Made his name in the Swedish navy but was defeated by Tordenskjold at Dynekilen.'
+  },
+  sioblad: {
+    id: 'sioblad', name: 'Carl Georg Sioblad', nationality: NATIONALITIES.SWEDEN,
+    pts: 28, commandRange: 12, commandPoints: 3, specialRules: ['Commodore', 'Cold Blooded', 'Broadside!', 'Impulsive'],
+    canLead: ['Swedish Royal Navy 1700-1721'],
+    tier: 'historic',
+    bio: 'Governor of Malmö post-war. Foolishly attacked 61 Russian galleys with 5 ships at Grengam; four frigates ran aground and were captured.'
+  },
+  norcross: {
+    id: 'norcross', name: 'John Norcross', nationality: NATIONALITIES.SWEDEN,
+    pts: 10, commandRange: 8, commandPoints: 1, specialRules: ['Aggressive Commander', 'Wanted'],
+    canLead: ['Swedish Privateers'],
+    tier: 'historic',
+    bio: 'Liverpool-born Jacobite exile turned Swedish privateer. Captured, escaped, recaptured, pardoned, recaptured again. Died in Danish prison in 1758.'
+  },
+  charles_xii: {
+    id: 'charles_xii', name: 'Charles XII', nationality: NATIONALITIES.SWEDEN,
+    pts: 32, commandRange: 20, commandPoints: 3,
+    specialRules: ['Autocrat', 'Very Inspiring', 'Bold', 'Aggressive Commander', 'Unwavering'],
+    mainWeapons: 'Brace of Pistols and Standard Melee Weapon',
+    canLead: ['Swedish Army 1700-1721', 'Drabant Corps 1700-1721'],
+    tier: 'legendary',
+    notes: 'May join support unit only if mounted at start and is a Swedish unit.',
+    bio: 'Crowned at 15, died at 36. Won 25 of 33 battles. The greatest warrior-king of the North — lost only because Sweden\'s manpower could not match her enemies\'.'
+  },
+
+  // UNALIGNED COSSACK
+  cos_untested: {
+    id: 'cos_untested', name: 'Untested Cossack Commander', nationality: NATIONALITIES.UNALIGNED,
+    pts: 0, commandRange: 4, commandPoints: 1, specialRules: [],
+    canLead: ['Cossack Raiding Party 1700-1721', 'Zaporozhian Sich 1700-1721'],
+    tier: 'standard'
+  },
+  cos_experienced: {
+    id: 'cos_experienced', name: 'Experienced Cossack Commander', nationality: NATIONALITIES.UNALIGNED,
+    pts: 10, commandRange: 8, commandPoints: 2,
+    specialRules: ['1 from Unaligned Cossack Commander List'], commanderRuleList: 'COSSACK', commanderRulePicks: 1,
+    canLead: ['Cossack Raiding Party 1700-1721', 'Zaporozhian Sich 1700-1721'],
+    tier: 'standard'
+  },
+  cos_seasoned: {
+    id: 'cos_seasoned', name: 'Seasoned Cossack Commander', nationality: NATIONALITIES.UNALIGNED,
+    pts: 20, commandRange: 12, commandPoints: 2,
+    specialRules: ['2 from Unaligned Cossack Commander List'], commanderRuleList: 'COSSACK', commanderRulePicks: 2,
+    canLead: ['Cossack Raiding Party 1700-1721', 'Zaporozhian Sich 1700-1721'],
+    tier: 'standard'
+  },
+  skoropadsky: {
+    id: 'skoropadsky', name: 'Ivan Skoropadsky', nationality: NATIONALITIES.UNALIGNED,
+    pts: 25, commandRange: 16, commandPoints: 2, specialRules: ['Delay Tactics', 'Inspiring', 'Bold'],
+    canLead: ['Zaporozhian Sich 1700-1721'],
+    tier: 'historic',
+    notes: 'In Army Scale, this force must be allied with Russia.',
+    bio: 'Replaced Mazepa as Hetman after the betrayal. Negotiated greater autonomy for the Sich post-war and kept Peter from absorbing Cossack lands.'
+  },
+  mazepa: {
+    id: 'mazepa', name: 'Ivan Mazepa', nationality: NATIONALITIES.UNALIGNED,
+    pts: 30, commandRange: 16, commandPoints: 3, specialRules: ['Guerilla Commander', 'Very Inspiring', 'Lucky'],
+    canLead: ['Zaporozhian Sich 1700-1721'],
+    tier: 'legendary',
+    notes: 'In Army Scale, this force must be allied with Sweden.',
+    bio: 'Hetman of the Sich from 1687-1708. Attempted to break from Russia and join Sweden for full independence. Only 3,000 men followed. Fled with Charles XII to the Ottoman Empire and died at 70.'
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────
+// UNITS
+// ─────────────────────────────────────────────────────────────────
+
+const UNITS = {
+
+  // ── DENMARK-NORWAY ──
+  indrullerede: {
+    id: 'indrullerede', name: 'Indrullerede', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Socket Bayonets, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/6', resolve: 5,
+    specialRules: ['Fast Reload', 'Expertly Drilled', 'Tough'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  provinsmilits: {
+    id: 'provinsmilits', name: 'Provinsmilits', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Muskets, Standard Melee Weapons',
+    fight: '7/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Drilled', 'Tough'],
+    options: [
+      'May be upgraded to Trained for +1 pt/model',
+      'May exchange Drilled for Sailors or Artillery Crew at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  milits: {
+    id: 'milits', name: 'Milits', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 4, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '7/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Drilled'],
+    options: ['May be upgraded to Trained for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  livgarde: {
+    id: 'livgarde', name: 'Livgarde', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 9, experienceLevel: 'Veteran',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapon',
+    fight: '5/5', shoot: '6/6', resolve: 4,
+    specialRules: ['Expertly Drilled', 'Fast Reload', 'Tough', 'Spry', 'Vanguard', 'Support: Indrullerede'],
+    options: [
+      'May be downgraded to Trained for -1 pt/model',
+      'May exchange Firelock Muskets & Socket Bayonets for Horses and Dragoon Muskets for -1 pt (shoot save 7 while mounted)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  grenadiers_dn: {
+    id: 'grenadiers_dn', name: 'Grenadiers (Danish)', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 8, experienceLevel: 'Veteran',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapon',
+    fight: '5/6', shoot: '6/6', resolve: 5,
+    specialRules: ['Expertly Drilled', 'Fast Reload', 'Tough', 'Battle Hardened'],
+    options: [
+      'May be downgraded to Trained for -1 pt/model',
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Firelock Musket for Hand Mortar at no cost',
+      'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
+      'If no Plug Bayonets and no Explosives, reduce unit cost by -4 pts',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  danish_cuirassiers: {
+    id: 'danish_cuirassiers', name: 'Danish Cuirassiers', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Brace of Pistols, Heavy Cavalry Sabers', equipment: 'Horse, Armor',
+    fight: '6/6', shoot: '6/7', resolve: 5,
+    specialRules: ['Quick (mounted)', 'Hard Chargers', 'Tough'],
+    options: ['May be upgraded to Veteran for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  danish_horse_grenadiers: {
+    id: 'danish_horse_grenadiers', name: 'Danish Horse Grenadiers', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 7, experienceLevel: 'Veteran',
+    weapons: 'Dragoon Musket, Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '6/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Quick (mounted)', 'Hard Chargers', 'Tough', 'Battle Hardened'],
+    options: [
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Dragoon Musket for Hand Mortar at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  fyorr: {
+    id: 'fyorr', name: 'Fyorr', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Standard Melee Weapons',
+    fight: '6/6', shoot: '6/7', resolve: 6,
+    specialRules: ['Elusive', 'Scouts'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May take Socket Bayonets for +4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  ski_troops: {
+    id: 'ski_troops', name: 'Ski Troops', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/6', resolve: 5,
+    specialRules: ['Quick', 'Scouts', 'Skirmishers'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May take Socket Bayonets for +4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  soemand: {
+    id: 'soemand', name: 'Sømænd', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Pistol, Standard Melee Weapon',
+    fight: '6/7', shoot: '7/7', resolve: 5,
+    specialRules: ['Sailors', 'Artillery Crew', 'Tough'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Pistols for Brace of Pistols for +4 pts (unit)',
+      'May exchange Pistols for Lances at no cost',
+      '1 of 3 may exchange Pistols for Blunderbusses at no cost',
+      'May downgrade to Standard Melee Weapon only for -1 pt/model',
+      '1 of 8 may add Stinkpots/Firepots for +2 pts/model or Grenadoes for +4 pts/model',
+      'May exchange Pistols for Firelock Muskets for +4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  jutlander: {
+    id: 'jutlander', name: 'Jutlander', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Standard Melee Weapon', sidearms: 'Pistol',
+    fight: '6/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Sailors', 'Expertly Drilled', 'Tough'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      '1 of 4 may add Blunderbusses at no cost',
+      '1 of 8 may add Stinkpots/Firepots for +2 pts/model or Grenadoes for +4 pts/model',
+      'May add Socket Bayonets for +1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  hvalfanger: {
+    id: 'hvalfanger', name: 'Hvalfanger', nationality: NATIONALITIES.DENMARK,
+    ptsPerModel: 5, experienceLevel: 'Veteran',
+    weapons: 'Thrown Weapons, Standard Melee Weapon',
+    fight: '5/6', shoot: '7/7', resolve: 5,
+    specialRules: ['Expert Sailors', 'Hard Chargers', 'Tough'],
+    options: [
+      'May be downgraded to Trained for -1 pt/model',
+      'May exchange Thrown Weapons for Brace of Pistols for +1 pt/model',
+      '1 of 4 may exchange Thrown Weapons for Blunderbuss at no cost',
+      'May exchange Thrown Weapons for Firelock Muskets for +1 pt/model',
+      'May exchange Thrown Weapons for Lances at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+
+  // ── SAXONY ──
+  saxon_line: {
+    id: 'saxon_line', name: 'Saxon Line Infantry', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Socket Bayonets, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Drilled', 'Fast Reload'],
+    options: [
+      'May be upgraded to Trained for +1 pt/model (note: starts Trained, upgrade to Veteran)',
+      'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  saxon_militia: {
+    id: 'saxon_militia', name: 'Saxon Militia', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 4, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '7/6', shoot: '7/8', resolve: 6,
+    specialRules: ['Drilled'],
+    options: [],
+    minModels: 4, maxModels: 12
+  },
+  saxon_foot_guards: {
+    id: 'saxon_foot_guards', name: 'Saxon Foot Guards', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '6/6', shoot: '6/6', resolve: 5,
+    specialRules: ['Drilled', 'Fast Reload', 'Tough'],
+    options: [
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Firelock Musket for Hand Mortar at no cost',
+      'May exchange Socket Bayonets for Plug Bayonets for -4 pts (unit)',
+      'If no Plug Bayonets and no Explosives, reduce unit cost by -4 pts',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  saxon_militia_cavalry: {
+    id: 'saxon_militia_cavalry', name: 'Saxon Militia Cavalry', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 4, experienceLevel: 'Inexperienced',
+    weapons: 'Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '7/7', shoot: '7/8', resolve: 6,
+    specialRules: ['Quick (mounted)', 'Skirmishers'],
+    options: ['May be upgraded to Trained for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  saxon_cuirassiers: {
+    id: 'saxon_cuirassiers', name: 'Saxon Cuirassiers', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Brace of Pistols, Heavy Cavalry Sabers', equipment: 'Armor, Horses',
+    fight: '5/7', shoot: '7/7', resolve: 5,
+    specialRules: ['Quick (mounted)', 'War Cry'],
+    options: [],
+    minModels: 4, maxModels: 12
+  },
+  saxon_guards_cuirassier: {
+    id: 'saxon_guards_cuirassier', name: 'Saxon Guards Cuirassier', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 7, experienceLevel: 'Veteran',
+    weapons: 'Brace of Pistols, Heavy Cavalry Saber', equipment: 'Armor, Horses',
+    fight: '5/7', shoot: '6/7', resolve: 4,
+    specialRules: ['Quick (mounted)', 'Hard Chargers', 'Unwavering', 'War Cry'],
+    options: [
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may take Hand Mortar at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  saxon_dragoons: {
+    id: 'saxon_dragoons', name: 'Saxon Dragoons', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Dragoon Musket, Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '6/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Quick (mounted)', 'Brawlers'],
+    options: [],
+    minModels: 4, maxModels: 12
+  },
+
+  // ── POLISH-LITHUANIAN ──
+  wybraniecka: {
+    id: 'wybraniecka', name: 'Wybraniecka', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 3, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Standard Melee Weapons',
+    fight: '6/6', shoot: '7/8', resolve: 6,
+    specialRules: ['Drilled'],
+    options: ['May take Plug Bayonets for +4 pts (unit)'],
+    minModels: 4, maxModels: 12
+  },
+  dragoni: {
+    id: 'dragoni', name: 'Dragoni (Polish Dragoons)', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Dragoon Muskets, Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '6/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Quick (mounted)', 'Brawlers'],
+    options: [],
+    minModels: 4, maxModels: 12
+  },
+  pancerni: {
+    id: 'pancerni', name: 'Pancerni (Armored Companion)', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Carbine, Standard Melee Weapon', sidearms: 'Pistol', equipment: 'Horses, Armor',
+    fight: '6/6', shoot: '7/8', resolve: 5,
+    specialRules: ['Quick (mounted)', 'Skirmishers'],
+    options: [
+      '1 of 4 may exchange Firelock Carbine for Lance for -4 pts (unit)',
+      'May be upgraded to Veteran for +1 pt/model',
+      'Models with Lances may add Recurve Bows for +1 pt/model (not with Firelock Carbines)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  winged_hussars: {
+    id: 'winged_hussars', name: 'Winged Hussars', nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Lances, Brace of Pistols, Heavy Cavalry Sabers', equipment: 'Horses, Armor',
+    fight: '5/6', shoot: '6/7', resolve: 5,
+    specialRules: ['Hard Chargers (mounted)', 'Quick (mounted)', 'Battle Hardened'],
+    options: [
+      'May exchange Brace of Pistols for Firelock Carbines at no cost',
+      'May remove Armor for -2 pts (unit)',
+      'May be upgraded to Veteran for +1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  kozatska_pikhota: {
+    id: 'kozatska_pikhota', name: "Kozatsʹka Pikhota", nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/7', resolve: 6,
+    specialRules: ['Elusive', 'Marksmen'],
+    options: [
+      'May be downgraded to Inexperienced for -1 pt/model (loses Marksmen)',
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Firelock Muskets for Recurve Bows (exchange Marksmen for Rain of Arrows)',
+      'May exchange Firelock Muskets for Lances (exchange Marksmen for Brawlers)',
+      'May add Pistol Sidearms for +2 pts (unit)',
+      'May add Armor for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12,
+    note: 'Cannot exchange Firelock Muskets for Recurve Bows when in Saxon or Polish-Lithuanian Army factions'
+  },
+  kozatska_kinnota: {
+    id: 'kozatska_kinnota', name: "Kozatsʹka Kinnota", nationality: NATIONALITIES.SAXONY,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Firelock Carbines, Standard Melee Weapons', equipment: 'Horses',
+    fight: '5/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Marksmen', 'Quick', 'Skirmishers'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Firelock Carbines for Brace of Pistols at no cost',
+      'May exchange Firelock Carbines for Recurve Bows for -1 pt/model (exchange Marksmen for Rain of Arrows)',
+      'May exchange Firelock Carbines for Lances for -1 pt/model (exchange Marksmen for War Cry)',
+      'May add Armor for +2 pts (unit)',
+      'May add Pistols for +1 pt/model (not with Brace of Pistols)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+
+  // ── RUSSIA ──
+  streltsy: {
+    id: 'streltsy', name: 'Streltsy', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Matchlock Musket, Standard Melee Weapons',
+    fight: '6/6', shoot: '6/7', resolve: 5,
+    specialRules: ['Drilled', 'Tough'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May add Heavy Melee Weapons at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  soldadty: {
+    id: 'soldadty', name: 'Soldaty', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Expertly Drilled', 'Dauntless'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May take Plug Bayonets for +4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  rekruty: {
+    id: 'rekruty', name: 'Rekruty', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Musket, Socket Bayonets, Standard Melee Weapon',
+    fight: '7/6', shoot: '7/7', resolve: 6,
+    specialRules: ['Drilled', 'Timid'],
+    options: ['May be upgraded to Veteran for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  fusilyory: {
+    id: 'fusilyory', name: 'Fusilyory', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Socket Bayonets, Standard Melee Weapons',
+    fight: '5/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Expertly Drilled', 'Fast Reload', 'Dauntless'],
+    options: [],
+    minModels: 4, maxModels: 12
+  },
+  pikinyory: {
+    id: 'pikinyory', name: 'Pikinyory', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Pikes, Standard Melee Weapons',
+    fight: '7/6', shoot: '-/8', resolve: 6,
+    specialRules: ['Drilled Pikemen', 'Tough', 'Support: Rekruty/Streltsy/Soldaty/Fusilyory'],
+    options: [
+      'May be upgraded to Trained for +1 pt/model',
+      'May add Armor for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12,
+    note: 'May not take Armor in Semyonovsky Lifeguard Regiment'
+  },
+  pushkari: {
+    id: 'pushkari', name: 'Pushkari', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Standard Melee Weapon',
+    fight: '7/7', shoot: '-/7', resolve: 6,
+    specialRules: ['Artillery Crew', 'Field Gun', 'Dauntless'],
+    options: ['May be upgraded to Trained for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  grenadyory: {
+    id: 'grenadyory', name: 'Grenadyory', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 7, experienceLevel: 'Veteran',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '5/6', shoot: '6/6', resolve: 5,
+    specialRules: ['Expertly Drilled', 'Fast Reload', 'Dauntless'],
+    options: [
+      'May be downgraded to Trained for -1 pt/model',
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Firelock Musket for Hand Mortar at no cost',
+      'If no Explosives, reduce unit cost by -4 pts',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  dvoriani_cavalry: {
+    id: 'dvoriani_cavalry', name: 'Dvoriani Cavalry', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Standard Melee Weapons', equipment: 'Armor, Horses',
+    fight: '6/6', shoot: '7/7', resolve: 6,
+    specialRules: ['Hard Chargers', 'High Standing', 'War Cry'],
+    options: [
+      'May add Recurve Bows for +1 pt/model',
+      'May add Pistols for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  draguny: {
+    id: 'draguny', name: 'Draguny', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 6, experienceLevel: 'Inexperienced',
+    weapons: 'Dragoon Musket, Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '6/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Drilled (dismounted only)', 'Quick (mounted only)', 'Tough'],
+    options: [
+      'May be upgraded to Trained for +1 pt/model',
+      'May exchange Brace of Pistols for Lances at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  konnyye_grenadyory: {
+    id: 'konnyye_grenadyory', name: 'Konnyye Grenadyory', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 7, experienceLevel: 'Veteran',
+    weapons: 'Dragoon Musket, Brace of Pistols, Standard Melee Weapons', equipment: 'Horses',
+    fight: '6/7', shoot: '6/7', resolve: 4,
+    specialRules: ['Expertly Drilled (dismounted)', 'Quick (mounted)', 'War Cry'],
+    options: [
+      'May be upgraded to Veteran (already Veteran — no upgrade)',
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Dragoon Musket for Hand Mortar at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  matrosy: {
+    id: 'matrosy', name: 'Matrosy', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Pistols, Standard Melee Weapon',
+    fight: '6/6', shoot: '7/7', resolve: 5,
+    specialRules: ['Artillery Crew', 'Sailors', 'War Cry'],
+    options: [
+      '1 of 4 may exchange Pistols for Blunderbusses at no cost',
+      '1 of 8 may add Stinkpots/Firepots for +2 pts/model or Grenadoes for +4 pts/model',
+      'May exchange Pistols for Brace of Pistols for +4 pts (unit)',
+      'May exchange Pistols for Lances at no cost',
+      'May exchange Pistols for Firelock Muskets for +4 pts (unit)',
+      'Entire unit may downgrade to Standard Melee Weapons only for -1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  morskiye_volki: {
+    id: 'morskiye_volki', name: 'Morskiye Volki', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 6, experienceLevel: 'Veteran',
+    weapons: 'Brace of Pistols, Standard Melee Weapon',
+    fight: '5/6', shoot: '7/6', resolve: 5,
+    specialRules: ['Expert Artillery Crew', 'Expert Sailors', 'War Cry'],
+    options: [
+      '1 of 3 may add Blunderbusses for +1 pt/model',
+      'May exchange Brace of Pistols for Firelock Muskets at no cost',
+      '1 of 4 may add Stinkpots/Firepots for +2 pts/model or Grenadoes for +4 pts/model',
+      'May be downgraded to Trained for -1 pt/model',
+      'If equipped with Firelock Muskets, may add Pistol sidearms for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  morskiye_soldaty: {
+    id: 'morskiye_soldaty', name: 'Morskiye Soldaty (Naval Infantry)', nationality: NATIONALITIES.RUSSIA,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Plug Bayonets, Standard Melee Weapon',
+    fight: '5/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Expertly Drilled', 'War Cry'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Plug Bayonets for Socket Bayonets for +4 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+
+  // ── SWEDEN ──
+  linjetrupp: {
+    id: 'linjetrupp', name: 'Linjetrupp', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 7, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Socket Bayonets, Standard Melee Weapon',
+    fight: '6/6', shoot: '6/7', resolve: 4,
+    specialRules: ['Battle Hardened', 'Expertly Drilled', 'Fast Reload', 'Unwavering'],
+    options: [
+      'May exchange Firelock Muskets & Socket Bayonets for Pikes at -2 pts/model (exchange Expertly Drilled & Fast Reload for Drilled Pikemen)',
+      'May be upgraded to Veteran for +1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  grenadjär: {
+    id: 'grenadjär', name: 'Grenadj​är', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 8, experienceLevel: 'Veteran',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '5/6', shoot: '6/6', resolve: 4,
+    specialRules: ['Expertly Drilled', 'Battle Hardened', 'Brawlers', 'Fast Reload', 'Unwavering'],
+    options: [
+      'May be downgraded to Trained for -1 pt/model',
+      '1 of 4 may carry Explosives at no cost',
+      'Explosive carriers may exchange Firelock Musket for Hand Mortar at no cost',
+      'If no Explosives, reduce unit cost by -4 pts',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  milis_swe: {
+    id: 'milis_swe', name: 'Milis (Swedish)', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Musket, Standard Melee Weapon',
+    fight: '6/7', shoot: '7/8', resolve: 5,
+    specialRules: ['Drilled'],
+    options: [
+      'May exchange Firelock Muskets for Pikes',
+      'May add Socket Bayonets for +1 pt/model',
+      'May be upgraded to Trained for +1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  prisoner_militia: {
+    id: 'prisoner_militia', name: 'Prisoner Militia', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 2, experienceLevel: 'Inexperienced',
+    weapons: 'Firelock Musket, Standard Melee Weapons',
+    fight: '7/8', shoot: '8/8', resolve: 7,
+    specialRules: ['Timid', 'Poorly Equipped'],
+    options: ['May add Socket Bayonets for +4 pts (unit)'],
+    minModels: 4, maxModels: 12
+  },
+  kavalleri: {
+    id: 'kavalleri', name: 'Kavalleri', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Dragoon Musket, Brace of Pistols, Standard Melee Weapon', equipment: 'Horses',
+    fight: '6/6', shoot: '6/7', resolve: 5,
+    specialRules: ['Quick (mounted)', 'Battle Hardened', 'War Cry'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May take Armor for +2 pts (unit)',
+      'May exchange Dragoon Muskets for Heavy Cavalry Sabers at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  artillerister: {
+    id: 'artillerister', name: 'Artillerister', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 3, experienceLevel: 'Trained',
+    weapons: 'Standard Melee Weapons',
+    fight: '7/7', shoot: '-/8', resolve: 5,
+    specialRules: ['Expert Artillery Crew', 'Field Gun'],
+    options: ['May be upgraded to Veteran for +1 pt/model'],
+    minModels: 4, maxModels: 12
+  },
+  sjoman: {
+    id: 'sjoman', name: 'Sjöman', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Pistol, Standard Melee Weapon',
+    fight: '6/7', shoot: '7/7', resolve: 5,
+    specialRules: ['Expert Artillery Crew', 'Sailors', 'Brawlers'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Pistols for Brace of Pistols for +4 pts (unit)',
+      'May exchange Pistols for Lances at no cost',
+      'May replace Pistols for Firelock Muskets for +4 pts (unit)',
+      '1 of 4 may add Blunderbusses at no cost',
+      '1 of 4 may add Grenadoes for +4 pts/model or Stinkpots/Firepots for +2 pts/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  kustseglare: {
+    id: 'kustseglare', name: 'Kustseglare', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 3, experienceLevel: 'Trained',
+    weapons: 'Standard Melee Weapons, Sidearm Pistols',
+    fight: '7/7', shoot: '7/7', resolve: 6,
+    specialRules: ['Expert Sailors', 'Tough', 'Support: Sjöman'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Sidearm Pistols for Pistols or Lances for +1 pt/model',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  sjoinfanteri: {
+    id: 'sjoinfanteri', name: 'Sjöinfanteri', nationality: NATIONALITIES.SWEDEN,
+    ptsPerModel: 5, experienceLevel: 'Trained',
+    weapons: 'Firelock Muskets, Socket Bayonets, Standard Melee Weapons',
+    fight: '6/6', shoot: '6/7', resolve: 5,
+    specialRules: ['Expertly Drilled', 'Brawlers'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May add Pistols for +1 pt/model',
+      '1 of 4 may exchange Firelock Muskets for Blunderbusses at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+
+  // ── UNALIGNED (COSSACK) ──
+  nevpravnyy_kozak: {
+    id: 'nevpravnyy_kozak', name: 'Nevpravnyy Kozak', nationality: NATIONALITIES.UNALIGNED,
+    ptsPerModel: 3, experienceLevel: 'Inexperienced',
+    weapons: 'Lances, Standard Melee Weapons',
+    fight: '7/8', shoot: '6/7', resolve: 6,
+    specialRules: ['Elusive'],
+    options: [
+      'May exchange Lances for Recurve Bows at no cost',
+      'May exchange Lances for Firelock Muskets at no cost',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  kozatska_pikhota_unaligned: {
+    id: 'kozatska_pikhota_unaligned', name: "Kozatsʹka Pikhota (Cossack)", nationality: NATIONALITIES.UNALIGNED,
+    ptsPerModel: 4, experienceLevel: 'Trained',
+    weapons: 'Firelock Musket, Standard Melee Weapons',
+    fight: '6/7', shoot: '6/7', resolve: 6,
+    specialRules: ['Elusive', 'Marksmen'],
+    options: [
+      'May be downgraded to Inexperienced for -1 pt/model (loses Marksmen)',
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Firelock Muskets for Recurve Bows (exchange Marksmen for Rain of Arrows)',
+      'May exchange Firelock Muskets for Lances (exchange Marksmen for Brawlers)',
+      'May add Pistol Sidearms for +2 pts (unit)',
+      'May add Armor for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  veterany_kozatstva: {
+    id: 'veterany_kozatstva', name: 'Veterany Kozatstva', nationality: NATIONALITIES.UNALIGNED,
+    ptsPerModel: 5, experienceLevel: 'Veteran',
+    weapons: 'Firelock Musket, Standard Melee Weapons',
+    fight: '5/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Elusive', 'Marksmen'],
+    options: [
+      'May exchange Firelock Muskets for Recurve Bows (exchange Marksmen for Rain of Arrows)',
+      'May exchange Firelock Muskets for Lances (exchange Marksmen for Brawlers)',
+      'May add Pistol Sidearms for +2 pts (unit)',
+      'May add Armor for +2 pts (unit)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+  kozatska_kinnota_unaligned: {
+    id: 'kozatska_kinnota_unaligned', name: "Kozatsʹka Kinnota (Cossack)", nationality: NATIONALITIES.UNALIGNED,
+    ptsPerModel: 6, experienceLevel: 'Trained',
+    weapons: 'Firelock Carbines, Standard Melee Weapons', equipment: 'Horses',
+    fight: '5/7', shoot: '6/7', resolve: 5,
+    specialRules: ['Marksmen', 'Quick', 'Skirmishers'],
+    options: [
+      'May be upgraded to Veteran for +1 pt/model',
+      'May exchange Firelock Carbines for Brace of Pistols at no cost',
+      'May exchange Firelock Carbines for Recurve Bows for -1 pt/model (exchange Marksmen for Rain of Arrows)',
+      'May exchange Firelock Carbines for Lances for -1 pt/model (exchange Marksmen for War Cry)',
+      'May add Armor for +2 pts (unit)',
+      'May add Pistols for +1 pt/model (not with Brace of Pistols)',
+    ],
+    minModels: 4, maxModels: 12
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────
+// FACTIONS
+// ─────────────────────────────────────────────────────────────────
+
+const FACTIONS = [
+  {
+    id: 'army_denmark_norway',
+    name: 'Army of Denmark-Norway 1700-1721',
+    nationality: NATIONALITIES.DENMARK,
+    description: 'A well-equipped modern army with experienced veteran troops. Norwegian forces can fight as regulars or use ski troops and irregular infantry for hit-and-run tactics.',
+    forceSpecialRules: [
+      'Commander may spend 2 CP to issue a platoon action to all Expertly Drilled units in Command Range.',
+      'Burgher Guard: May include a single unit of Livgarde or Grenadiers as Core if Commander is attached to that unit.',
+      'Commander\'s unit may take a Standard Action to gain +1 CP this Activation.',
+      'All units gain the Tough Special Rule.',
+    ],
+    forceOptions: [
+      'Norwegian Garrison: Milits, Fyorr, Ski Troops and European Regulars become Core. This faction is automatically Defender. May not take Indrullerede, Provinsmilits, Livgarde, Grenadiers, Danish Cuirassiers or Danish Horse Grenadiers.',
+      'Guerilla Ski Patrol: May take Ski Troops as Core if at least 3 units of Ski Troops are included. If Attacker, may deploy Ski Troops using Lay in Wait rules (do not deploy prone).',
+    ],
+    coreUnits: ['indrullerede', 'provinsmilits', 'milits'],
+    supportUnits: ['european_regulars', 'fyorr', 'ski_troops', 'livgarde', 'grenadiers_dn', 'danish_cuirassiers', 'danish_horse_grenadiers'],
+    availableCommanders: ['dn_untested', 'dn_experienced', 'dn_seasoned', 'jens_rostgaard', 'frederick_iv'],
+  },
+  {
+    id: 'danish_royal_navy',
+    name: 'Danish Royal Navy 1700-1721',
+    nationality: NATIONALITIES.DENMARK,
+    description: 'Long tradition of quality sailors. Clashed with Swedish rivals 7 times, decisively winning 3. Danish captains were aggressive privateers against Swedish shipping.',
+    forceSpecialRules: [
+      'All size 2 ships gain Galley: 3 and Shallow Draft.',
+      'Commander may spend 2 CP to issue Reload or Shoot to all Expert Artillery Crew units in Command Range.',
+      'Force gains +3 to dice roll when determining attacker.',
+      'Sømænd may upgrade Artillery Crew to Expert Artillery Crew for +4 pts/unit.',
+    ],
+    forceOptions: [
+      'Early War: +4 to attacker roll if a size 3+ ship is included.',
+      'Late War: +1 to range penalty for Shoot Actions with Cannons against size 2 & 3 ships (while at maximum sail).',
+      'Naval Landing Force: If no size 2+ ships are taken, Indrullerede may be Core units.',
+    ],
+    coreUnits: ['soemand', 'provinsmilits', 'jutlander'],
+    supportUnits: ['indrullerede', 'hvalfanger'],
+    availableCommanders: ['dn_untested', 'dn_experienced', 'dn_seasoned', 'tordenskiold'],
+  },
+  {
+    id: 'danish_privateers',
+    name: 'Danish Privateers 1700-1721',
+    nationality: NATIONALITIES.DENMARK,
+    description: 'Fast, knowledgeable privateers using their unmatched knowledge of the North and Baltic seas to prey on enemy shipping.',
+    forceSpecialRules: [
+      'Force gains +2 to dice roll when determining attacker.',
+      'Force\'s Ships gain Shallow Draft.',
+      'If Attacker, once per game discard all Activation Cards and draw the same number for free (no Fortune Point).',
+    ],
+    forceOptions: [],
+    coreUnits: ['soemand', 'hvalfanger'],
+    supportUnits: ['provinsmilits'],
+    availableCommanders: ['dn_untested', 'dn_experienced', 'dn_seasoned'],
+  },
+  {
+    id: 'army_saxony',
+    name: 'Army of Saxony 1682-1716',
+    nationality: NATIONALITIES.SAXONY,
+    description: 'Mid-reform army featuring the complete abandonment of the pike for cheval-de-frise, armed with a combi-lock musket. Supplemented by Polish-Lithuanian forces.',
+    forceSpecialRules: [
+      'Commander has Poor Leadership Special Rule when issuing CP to non-Saxon units.',
+      'Commander may spend 2 CP to issue platoon action to all Drilled units in Command Range.',
+      'May include one more support unit than usual.',
+      'Subtracts -2 from dice roll to determine attacker.',
+      'If Defender, may include 1 Cheval-de-Frise Fortification for free.',
+      "Kozatsʹka Pikhota cannot exchange Firelock Muskets for Recurve Bows.",
+      'All units gain the Cunning Special Rule.',
+    ],
+    forceOptions: [
+      'Troop of Horse: Saxon Militia Cavalry and Saxon Dragoons become Core if at least 2 units of Saxon Militia Cavalry and/or Dragoons are included.',
+    ],
+    coreUnits: ['saxon_line', 'saxon_militia', 'wybraniecka', 'kozatska_pikhota'],
+    supportUnits: ['saxon_foot_guards', 'saxon_militia_cavalry', 'saxon_cuirassiers', 'saxon_dragoons', 'kozatska_kinnota'],
+    availableCommanders: ['sax_untested', 'sax_experienced', 'sax_seasoned', 'heinrich_steinau', 'schulenburg', 'augustus_ii'],
+  },
+  {
+    id: 'polish_lithuanian_army',
+    name: 'Polish-Lithuanian Army 1700-1721',
+    nationality: NATIONALITIES.SAXONY,
+    description: 'Often inexperienced infantry but legendary cavalry. The Winged Hussars reminded the Swedes exactly how they got their reputation.',
+    forceSpecialRules: [
+      'Saxon commanders gain the Poor Leadership Special Rule.',
+      'If only mounted units, Commander may be mounted at no additional cost.',
+      'All Mounted Units gain the War Cry Special Rule.',
+      "Kozatsʹka Pikhota cannot exchange Firelock Muskets for Recurve Bows.",
+    ],
+    forceOptions: [],
+    coreUnits: ['dragoni', 'wybraniecka', 'pancerni', 'kozatska_pikhota'],
+    supportUnits: ['winged_hussars', 'saxon_cuirassiers', 'saxon_line', 'kozatska_kinnota'],
+    availableCommanders: ['sax_untested', 'sax_experienced', 'sax_seasoned', 'pol_untested', 'pol_experienced', 'pol_seasoned', 'augustus_ii'],
+  },
+  {
+    id: 'old_russian_army',
+    name: 'Old Russian Army 1686-1705',
+    nationality: NATIONALITIES.RUSSIA,
+    description: 'A mixture of antiquated and modern troops. Peter\'s reforms are taking hold but antiquated units remain. Supplemented by Cossack allies.',
+    forceSpecialRules: [
+      'Commander may be attached to Support units.',
+      'Russian Standard Commanders must take Poor Leadership Special Rule.',
+      'May not include more than one unit of Dvoriani Cavalry.',
+      'Rekruty gain the Support: Streltsy Special Rule.',
+    ],
+    forceOptions: [],
+    coreUnits: ['soldadty', 'streltsy', 'rekruty', 'kozatska_pikhota', 'dvoriani_cavalry', 'pushkari'],
+    supportUnits: ['kozatska_kinnota'],
+    availableCommanders: ['rus_untested', 'rus_experienced', 'rus_seasoned', 'peter_i', 'menshikov', 'sheremetev'],
+  },
+  {
+    id: 'peter_new_model_army',
+    name: "Peter's New Model Army 1705-1721",
+    nationality: NATIONALITIES.RUSSIA,
+    description: 'The culmination of Peter\'s reforms: modern equipment, artillery, and cavalry drilled in the European style. Stoic infantry but not quite the quality of other European powers.',
+    forceSpecialRules: [
+      'Commander may spend 2 CP to issue platoon action to all Expertly Drilled units in Command Range.',
+      'Commander\'s unit may take a Standard Action to gain +1 CP this Activation.',
+      'Pikinyory may not take Armor.',
+    ],
+    forceOptions: [
+      'Draguny Patrol: Draguny become Core if at least 2 units of Draguny are taken. Fusilyory become Support. Cannot take Pushkari.',
+      'Mid-War: Rekruty become Core. Fusilyory gain Support: Rekruty Special Rule.',
+    ],
+    coreUnits: ['fusilyory', 'pikinyory', 'kozatska_pikhota'],
+    supportUnits: ['rekruty', 'pushkari', 'draguny', 'konnyye_grenadyory', 'grenadyory', 'kozatska_kinnota'],
+    availableCommanders: ['rus_untested', 'rus_experienced', 'rus_seasoned', 'peter_i', 'menshikov', 'sheremetev'],
+  },
+  {
+    id: 'semyonovsky_lifeguard',
+    name: 'Semyonovsky Lifeguard Regiment 1700-1721',
+    nationality: NATIONALITIES.RUSSIA,
+    description: 'Peter\'s personal force — the best trained and equipped regiment in Russia. So skilled that Charles XII of Sweden let them march back from Narva with banners unfurled.',
+    forceSpecialRules: [
+      'Fusilyory and Pikinyory must be upgraded to Veteran.',
+      'Pushkari must be upgraded to Trained.',
+      'All units gain the Unwavering Special Rule.',
+      'If using Army Scale, only one Semyonovsky Company may be taken.',
+      'Commander may spend 2 CP to issue platoon action to all Drilled units in Command Range.',
+      'Once per game, at the start of any turn, remove 1 point of fatigue from all units.',
+    ],
+    forceOptions: [],
+    coreUnits: ['fusilyory', 'pikinyory', 'pushkari'],
+    supportUnits: ['draguny', 'konnyye_grenadyory', 'grenadyory'],
+    availableCommanders: ['peter_i'],
+  },
+  {
+    id: 'russian_imperial_navy',
+    name: 'Russian Imperial Navy (1700-1755)',
+    nationality: NATIONALITIES.RUSSIA,
+    description: 'Peter\'s passion project — built fast, often with unseasoned timbers. Commanded by English and Dutch captains. By war\'s end, earned a begrudging respect from defeated enemies.',
+    forceSpecialRules: [
+      'All ships gain Shallow Draft.',
+      'Commander may spend 2 CP to issue Reload or Shoot to all Expert Artillery Crew units in Command Range.',
+      'Force gains +4 to dice roll when determining attacker.',
+      'Matrosy may upgrade Artillery Crew to Expert Artillery Crew for +4 pts/unit.',
+    ],
+    forceOptions: [
+      'Unseasoned Timbers: Size 3+ ships may reduce Hull Integrity by 1 and take -2 pts off ship cost.',
+      'Foreign Commanders: May be led by English, Dutch, or Unaligned European Commander. If so, may take one core unit of their respective type. Commander gains Strict (Russian units only). All Russian units gain Prejudice.',
+      'Naval Landing Force: If no size 2+ ships, Fusilyory may be Core units.',
+    ],
+    coreUnits: ['matrosy', 'morskiye_soldaty', 'morskiye_volki'],
+    supportUnits: ['rekruty'],
+    availableCommanders: ['rus_untested', 'rus_experienced', 'rus_seasoned', 'peter_i', 'zmajevic'],
+  },
+  {
+    id: 'russian_privateers',
+    name: 'Russian Privateers (1700-1721)',
+    nationality: NATIONALITIES.RUSSIA,
+    description: 'Russia welcomed foreign captains who accepted a "passport" (Letter of Marque) to sail for Tsar and prize money. Mostly foreign enterprising captains.',
+    forceSpecialRules: [
+      'Force gains +2 to dice roll when determining attacker.',
+      'Force\'s Ships gain Shallow Draft.',
+      'If Attacker, once per game discard all Activation Cards and draw the same number for free.',
+    ],
+    forceOptions: [
+      'Foreign Service (British): If a British Commander is chosen, all British Support Units become Core.',
+      'Foreign Service (Dutch): If a Dutch Commander is chosen, all Dutch Support Units become Core.',
+      'Unseasoned Timbers: Size 3+ ships may reduce Hull Integrity by 1 and take -2 pts off ship cost.',
+    ],
+    coreUnits: ['matrosy', 'morskiye_volki'],
+    supportUnits: [],
+    availableCommanders: ['rus_untested', 'rus_experienced', 'rus_seasoned'],
+  },
+  {
+    id: 'swedish_army',
+    name: 'Swedish Army 1700-1721',
+    nationality: NATIONALITIES.SWEDEN,
+    description: 'The greatest fighting force in the Baltic. Relentless bayonet-and-pike close-quarters tactics allowed them to defeat armies 2-3x their size. Won 25 of 33 battles under Charles XII.',
+    forceSpecialRules: [
+      'Gå På!: All units gain Quick. Platoon Action charges also give Hard Chargers for that Charge action.',
+      'Commander may spend 2 CP to issue platoon action to all Expertly Drilled and Drilled Pikemen units in Command Range.',
+      'May include one more support unit than usual.',
+      'Commander\'s unit may take a Standard Action to gain +1 CP this Activation.',
+    ],
+    forceOptions: [
+      'Late War: No Core Units may be taken as Veterans. Linjetrupp gain Support: Milis. Inexperienced/Trained units lose Battle Hardened. Prisoner Militia become Core.',
+      'Cavalry Patrol: Kavalleri become Core (min 2 units). Artillerister may not be taken.',
+    ],
+    coreUnits: ['linjetrupp', 'milis_swe'],
+    supportUnits: ['kavalleri', 'artillerister', 'grenadjär', 'prisoner_militia', 'kozatska_pikhota'],
+    availableCommanders: ['swe_untested', 'swe_experienced', 'swe_seasoned', 'stenbock', 'rehnskiold', 'charles_xii'],
+  },
+  {
+    id: 'drabant_corps',
+    name: 'Drabant Corps 1700-1721',
+    nationality: NATIONALITIES.SWEDEN,
+    description: 'Charles XII\'s elite bodyguard — 168 men, all officers, finest weapons. Used as both a royal bodyguard and to spearhead the most critical assaults.',
+    forceSpecialRules: [
+      'Commander may spend 2 CP to issue platoon action to all Expertly Drilled and Drilled Pikemen units in Command Range.',
+      'Once per game, a single Fight test may be re-rolled without spending a Fortune Point.',
+      'If playing Army Scale, only 1 company of Drabant Corps may be taken.',
+    ],
+    forceOptions: [],
+    coreUnits: ['linjetrupp', 'grenadjär'],
+    supportUnits: ['kavalleri', 'artillerister'],
+    availableCommanders: ['charles_xii'],
+  },
+  {
+    id: 'swedish_royal_navy',
+    name: 'Swedish Royal Navy 1700-1721',
+    nationality: NATIONALITIES.SWEDEN,
+    description: 'Always second to the army. Relied on English and Dutch allies, who were tied up in the War of Spanish Succession. Steadily ground down by Danish and Russian navies.',
+    forceSpecialRules: [
+      'Force adds +2 when determining attacker.',
+      'May include one more support unit than usual.',
+      'Commander may spend 2 CP to issue Reload or Shoot to all Expert Artillery Crew units in Command Range.',
+    ],
+    forceOptions: [
+      'Late War: If at least one Veteran unit is included, apply -2 when determining attacker.',
+      'Naval Landing Force: If no size 2+ ships, Linjetrupp may be Core units.',
+    ],
+    coreUnits: ['sjoman', 'kustseglare', 'sjoinfanteri'],
+    supportUnits: ['linjetrupp', 'grenadjär'],
+    availableCommanders: ['swe_untested', 'swe_experienced', 'swe_seasoned', 'stromstierna', 'sioblad'],
+  },
+  {
+    id: 'swedish_privateers',
+    name: 'Swedish Privateers',
+    nationality: NATIONALITIES.SWEDEN,
+    description: 'Native and foreign (English and French) privateers preying on Russian merchants with reckless abandon, more cautious against experienced Danish sailors.',
+    forceSpecialRules: [
+      'May not take any ships greater than size 2 (except Brigantine and Privateer Brigantine).',
+      'Force gains +2 to dice roll when determining attacker.',
+      'If led by British Commander, Sea Dogs become Core. If French Commander, Marins become Core.',
+    ],
+    forceOptions: [],
+    coreUnits: ['sjoman', 'kustseglare'],
+    supportUnits: [],
+    availableCommanders: ['swe_untested', 'swe_experienced', 'swe_seasoned', 'norcross'],
+  },
+  {
+    id: 'cossack_raiding_party',
+    name: 'Cossack Raiding Party 1700-1721',
+    nationality: NATIONALITIES.UNALIGNED,
+    description: 'Masters of the steppes. Used bows, firearms, and blades. Excellent marksmen, ferocious melee fighters, expert horsemen and rivermen. Raided both invaders and domestic enemies.',
+    forceSpecialRules: [
+      'Force adds +2 to its roll to determine attacker.',
+      'May not take Ships or Artillery (unless River Raiders is chosen).',
+    ],
+    forceOptions: [
+      'River Raiders: May only take Canoa, Longboat, Piragua, Bark, and Barco Luengo. Only Swivel Guns and Light Cannons as Artillery. Kozatsʹka Pikhota gain Sailors and Artillery Crew. Kozatsʹka Kinnota may remove horses for -1 pt/model.',
+      'Mounted Raiders: Kozatsʹka Kinnota become Core if at least 2 units are taken, and no Nevpravnyy Kozak are taken.',
+    ],
+    coreUnits: ['nevpravnyy_kozak', 'kozatska_pikhota_unaligned', 'veterany_kozatstva'],
+    supportUnits: ['kozatska_kinnota_unaligned'],
+    availableCommanders: ['cos_untested', 'cos_experienced', 'cos_seasoned'],
+  },
+  {
+    id: 'zaporozhian_sich',
+    name: 'Zaporozhian Sich 1700-1721',
+    nationality: NATIONALITIES.UNALIGNED,
+    description: 'Semi-autonomous Cossack state (1552-1755). Under constant threat from Ottoman Empire, Poland-Lithuania, and Russia. A faction under Mazepa attempted to join Sweden.',
+    forceSpecialRules: [
+      'All Trained and Veteran Units gain the Tough Special Rule.',
+    ],
+    forceOptions: [],
+    coreUnits: ['nevpravnyy_kozak', 'kozatska_pikhota_unaligned', 'kozatska_kinnota_unaligned'],
+    supportUnits: ['veterany_kozatstva'],
+    availableCommanders: ['cos_untested', 'cos_experienced', 'cos_seasoned', 'skoropadsky', 'mazepa'],
+  },
+];
+
+// Export for use in main app
+if (typeof module !== 'undefined') {
+  module.exports = { NATIONALITIES, COMMANDER_SPECIAL_RULES, COMMANDERS, UNITS, FACTIONS };
+}
+
+</script>
+  <script>
+// ================================================================
+//  FROZEN EMPIRES — Force Builder Application Logic
+// ================================================================
+
+// ── STATE ──────────────────────────────────────────────────────────
+let state = {
+  nationality: null,
+  factionId: null,
+  commanderId: null,
+  commanderPickedRules: [], // Array of chosen special rule strings for standard commanders
+  commanderPoorLeadership: false, // Russian standard commander option
+  roster: [],          // Array of rosterUnit objects
+  forceOptions: {},    // Map of optionIndex -> boolean
+  nextId: 1,
+};
+
+// rosterUnit shape:
+// { _id, unitId, type: 'core'|'support', modelCount, selectedOptions: [] }
+
+function getFaction() { return state.factionId ? FACTIONS.find(f => f.id === state.factionId) : null; }
+function getCommander() { return state.commanderId ? COMMANDERS[state.commanderId] : null; }
+
+// ── POINTS ─────────────────────────────────────────────────────────
+
+// Parse a cost modifier from an option string.
+// Returns { perModel: number, flat: number }
+function parseOptionCost(optText) {
+  let perModel = 0, flat = 0;
+
+  // Match patterns like "+1 pt/model", "-1 pt/model", "+2 pts/model"
+  const perModelMatch = optText.match(/([+\-]?\d+)\s*pts?\/model/i);
+  if (perModelMatch) perModel = parseInt(perModelMatch[1]);
+
+  // Match patterns like "-4 pts (unit)", "+2 pts (not per model)"
+  const flatMatch = optText.match(/([+\-]?\d+)\s*pts?\s*(?:\(unit\)|\(not per model\))/i);
+  if (flatMatch) flat = parseInt(flatMatch[1]);
+
+  // Match "reduce unit cost by -4 pts" / "reduce the cost of the unit by 4 points"
+  if (!flat) {
+    const reduceMatch = optText.match(/reduce.*?cost.*?by\s*([+\-]?\d+)\s*pts?/i);
+    if (reduceMatch) flat = parseInt(reduceMatch[1]);
+  }
+
+  // Match trailing " for -1 pt (" style (e.g. Dragoon Muskets for -1 pt (note...))
+  if (!perModel && !flat) {
+    const forPtMatch = optText.match(/for\s+([+\-]\d+)\s*pts?\s*\(/i);
+    if (forPtMatch) flat = parseInt(forPtMatch[1]);
+  }
+
+  return { perModel, flat };
+}
+
+function calcUnitPts(rosterUnit) {
+  const unit = UNITS[rosterUnit.unitId];
+  if (!unit) return 0;
+
+  let ptsPerModel = unit.ptsPerModel;
+  let flatMod = 0;
+
+  (rosterUnit.selectedOptions || []).forEach(idx => {
+    const optText = unit.options[idx];
+    if (!optText) return;
+    const { perModel, flat } = parseOptionCost(optText);
+    ptsPerModel += perModel;
+    flatMod += flat;
+  });
+
+  return Math.max(0, ptsPerModel * rosterUnit.modelCount + flatMod);
+}
+
+function calcCommanderPts() {
+  const cmd = getCommander();
+  return cmd ? cmd.pts : 0;
+}
+
+function calcTotalPts() {
+  const unitPts = state.roster.reduce((sum, ru) => sum + calcUnitPts(ru), 0);
+  return calcCommanderPts() + unitPts;
+}
+
+// ── RENDER: NATIONALITY GRID ────────────────────────────────────────
+function renderNationalityGrid() {
+  const grid = document.getElementById('nationalityGrid');
+  const nats = Object.values(NATIONALITIES);
+  grid.innerHTML = nats.map(nat => {
+    // Shorten labels
+    const short = {
+      'Denmark-Norway': 'Denmark-Norway',
+      'Saxony & Polish-Lithuanian Commonwealth': 'Saxony & Poland',
+      'Russia': 'Russia',
+      'Sweden': 'Sweden',
+      'Unaligned (Cossack)': 'Cossacks',
+    }[nat] || nat;
+    return `<button class="nat-btn ${state.nationality === nat ? 'active' : ''}" data-nat="${nat}">${short}</button>`;
+  }).join('');
+  grid.querySelectorAll('.nat-btn').forEach(btn => {
+    btn.addEventListener('click', () => selectNationality(btn.dataset.nat));
+  });
+}
+
+function selectNationality(nat) {
+  state.nationality = nat;
+  state.factionId = null;
+  state.commanderId = null;
+  state.roster = [];
+  state.forceOptions = {};
+  renderNationalityGrid();
+  renderFactionSection();
+  renderCommanderSection();
+  renderForceOptionsSection();
+  renderRoster();
+  renderUnitLibrary();
+  updatePoints();
+}
+
+// ── RENDER: FACTION SECTION ─────────────────────────────────────────
+function renderFactionSection() {
+  const section = document.getElementById('factionSection');
+  const select = document.getElementById('factionSelect');
+  const info = document.getElementById('factionInfo');
+
+  if (!state.nationality) { section.style.display = 'none'; return; }
+
+  const factions = FACTIONS.filter(f => f.nationality === state.nationality);
+  select.innerHTML = '<option value="">— Choose Faction —</option>' +
+    factions.map(f => `<option value="${f.id}" ${state.factionId === f.id ? 'selected' : ''}>${f.name}</option>`).join('');
+
+  const faction = getFaction();
+  info.textContent = faction ? faction.description : '';
+
+  section.style.display = '';
+
+  select.onchange = () => {
+    state.factionId = select.value || null;
+    state.commanderId = null;
+    state.roster = [];
+    state.forceOptions = {};
+    renderFactionSection();
+    renderCommanderSection();
+    renderForceOptionsSection();
+    renderRoster();
+    renderUnitLibrary();
+    renderRulesTab();
+    updatePoints();
+  };
+}
+
+// ── RENDER: COMMANDER SECTION ───────────────────────────────────────
+function renderCommanderSection() {
+  const section = document.getElementById('commanderSection');
+  const select = document.getElementById('commanderSelect');
+  const card = document.getElementById('commanderCard');
+
+  const faction = getFaction();
+  if (!faction) { section.style.display = 'none'; return; }
+
+  const cmds = faction.availableCommanders.map(id => COMMANDERS[id]).filter(Boolean);
+  select.innerHTML = '<option value="">— Choose Commander —</option>' +
+    cmds.map(c => {
+      const tier = c.tier !== 'standard' ? ` [${c.tier.charAt(0).toUpperCase() + c.tier.slice(1)}]` : '';
+      return `<option value="${c.id}" ${state.commanderId === c.id ? 'selected' : ''}>${c.name} — ${c.pts}pts${tier}</option>`;
+    }).join('');
+
+  section.style.display = '';
+
+  const cmd = getCommander();
+  if (cmd) {
+    card.style.display = '';
+    card.innerHTML = renderCommanderCard(cmd);
+    attachRulePickerListeners();
+  } else {
+    card.style.display = 'none';
+  }
+
+  select.onchange = () => {
+    state.commanderId = select.value || null;
+    state.commanderPickedRules = [];
+    state.commanderPoorLeadership = false;
+    renderCommanderSection();
+    updatePoints();
+    renderSummary();
+  };
+}
+
+function renderCommanderCard(cmd) {
+  const tierColors = { standard: 'tier-standard', historic: 'tier-historic', legendary: 'tier-legendary' };
+  const tierLabel = { standard: 'Standard', historic: 'Historic', legendary: 'Legendary' };
+
+  const basePicks = cmd.commanderRulePicks || 0;
+  const poorLeadershipActive = cmd.poorLeadershipOption && state.commanderPoorLeadership;
+  const effectivePicks = basePicks + (poorLeadershipActive ? 1 : 0);
+
+  let rulesHtml = '';
+
+  if (cmd.commanderRuleList) {
+    const available = COMMANDER_SPECIAL_RULES[cmd.commanderRuleList] || [];
+    const chosen = state.commanderPickedRules;
+
+    const plToggle = cmd.poorLeadershipOption ? `
+      <label class="poor-leadership-toggle">
+        <input type="checkbox" id="poorLeadershipCheck" ${poorLeadershipActive ? 'checked' : ''}>
+        <span>Take <strong>Poor Leadership</strong> for +1 extra rule pick</span>
+      </label>
+    ` : '';
+
+    const pickerLabel = effectivePicks > 0 ? `
+      <div class="rule-picker-label">
+        Commander Options
+        <span class="rule-picker-count ${chosen.length === effectivePicks ? 'count-done' : ''}">${chosen.length}/${effectivePicks}</span>
+      </div>` : `<div class="rule-picker-label">Commander Options</div>`;
+
+    const checkboxes = available.map(rule => {
+      const isChosen = chosen.includes(rule);
+      const isDisabled = effectivePicks === 0 || (!isChosen && chosen.length >= effectivePicks);
+      return `
+        <label class="option-checkbox ${isDisabled ? 'option-checkbox-disabled' : ''}">
+          <input type="checkbox" class="rule-chip-cb" data-rule="${rule}"
+            ${isChosen ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
+          <span>${rule}</span>
+        </label>`;
+    }).join('');
+
+    rulesHtml = `
+      <div class="commander-rule-picker">
+        ${plToggle}
+        ${pickerLabel}
+        <div class="rule-checkbox-list">${checkboxes}</div>
+      </div>`;
+
+  } else if (cmd.specialRules && cmd.specialRules.length) {
+    rulesHtml = `<div class="commander-rules"><em>Rules:</em> ${cmd.specialRules.join(', ')}</div>`;
+  }
+
+  return `
+    <div class="commander-name">${cmd.name}</div>
+    <span class="commander-tier ${tierColors[cmd.tier]}">${tierLabel[cmd.tier]}</span>
+    <div class="commander-stats">
+      <div class="stat-box">
+        <span class="stat-label">Range</span>
+        <span class="stat-value">${cmd.commandRange}"</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">CP</span>
+        <span class="stat-value">${cmd.commandPoints}</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Cost</span>
+        <span class="stat-value">${cmd.pts}pts</span>
+      </div>
+    </div>
+    ${cmd.mainWeapons ? `<div class="commander-rules"><em>Weapons:</em> ${cmd.mainWeapons}</div>` : ''}
+    ${rulesHtml}
+    ${cmd.notes ? `<div class="commander-rules"><em>Note:</em> ${cmd.notes}</div>` : ''}
+    ${cmd.bio ? `<div class="commander-bio">${cmd.bio}</div>` : ''}
+  `;
+}
+
+function attachRulePickerListeners() {
+  // Poor Leadership toggle
+  const plCheck = document.getElementById('poorLeadershipCheck');
+  if (plCheck) {
+    plCheck.addEventListener('change', () => {
+      state.commanderPoorLeadership = plCheck.checked;
+      const cmd = getCommander();
+      if (!state.commanderPoorLeadership && cmd) {
+        const basePicks = cmd.commanderRulePicks || 0;
+        if (state.commanderPickedRules.length > basePicks) {
+          state.commanderPickedRules = state.commanderPickedRules.slice(0, basePicks);
+        }
+      }
+      const card = document.getElementById('commanderCard');
+      card.innerHTML = renderCommanderCard(cmd);
+      attachRulePickerListeners();
+      renderSummary();
+    });
+  }
+
+  // Rule checkboxes
+  document.querySelectorAll('.rule-chip-cb').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const rule = cb.dataset.rule;
+      const cmd = getCommander();
+      if (!cmd) return;
+      const basePicks = cmd.commanderRulePicks || 0;
+      const effectivePicks = basePicks + (state.commanderPoorLeadership ? 1 : 0);
+      const idx = state.commanderPickedRules.indexOf(rule);
+      if (!cb.checked) {
+        if (idx >= 0) state.commanderPickedRules.splice(idx, 1);
+      } else {
+        if (idx < 0 && state.commanderPickedRules.length < effectivePicks) {
+          state.commanderPickedRules.push(rule);
+        } else if (state.commanderPickedRules.length >= effectivePicks) {
+          // Can't pick more — revert the checkbox
+          cb.checked = false;
+          return;
+        }
+      }
+      const card = document.getElementById('commanderCard');
+      card.innerHTML = renderCommanderCard(cmd);
+      attachRulePickerListeners();
+      renderSummary();
+    });
+  });
+}
+
+// ── RENDER: FORCE OPTIONS SECTION ──────────────────────────────────
+function renderForceOptionsSection() {
+  const section = document.getElementById('forceOptionsSection');
+  const list = document.getElementById('forceOptionsList');
+  const faction = getFaction();
+
+  if (!faction || !faction.forceOptions || faction.forceOptions.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  list.innerHTML = faction.forceOptions.map((opt, i) => `
+    <label class="force-option-item">
+      <input type="checkbox" data-idx="${i}" ${state.forceOptions[i] ? 'checked' : ''} />
+      <span>${opt}</span>
+    </label>
+  `).join('');
+
+  list.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const idx = parseInt(cb.dataset.idx);
+      state.forceOptions[idx] = cb.checked;
+    });
+  });
+}
+
+// ── RENDER: UNIT ADD CONTROLS ───────────────────────────────────────
+function renderUnitAddControls() {
+  const controls = document.getElementById('unitAddControls');
+  const unitTypeSelect = document.getElementById('unitTypeSelect');
+  const unitSelect = document.getElementById('unitSelect');
+  const faction = getFaction();
+
+  if (!faction) { controls.style.display = 'none'; return; }
+  controls.style.display = 'flex';
+
+  unitTypeSelect.onchange = () => populateUnitSelect();
+  populateUnitSelect();
+
+  function populateUnitSelect() {
+    const type = unitTypeSelect.value;
+    let unitIds = [];
+    if (type === 'core') unitIds = faction.coreUnits;
+    else if (type === 'support') unitIds = faction.supportUnits;
+
+    unitSelect.innerHTML = '<option value="">— Select Unit —</option>' +
+      unitIds.map(id => {
+        const u = UNITS[id];
+        return u ? `<option value="${id}">${u.name} — ${u.ptsPerModel}pts/model</option>` : '';
+      }).join('');
+  }
+
+  document.getElementById('btnAddUnit').onclick = () => {
+    const unitId = unitSelect.value;
+    const type = unitTypeSelect.value;
+    if (!unitId || !type) { alert('Please select a unit type and unit.'); return; }
+    const unit = UNITS[unitId];
+    addRosterUnit({ unitId, type, modelCount: unit.minModels || 4, selectedOptions: [] });
+  };
+}
+
+function addRosterUnit(data) {
+  const ru = { _id: state.nextId++, ...data };
+  state.roster.push(ru);
+  renderRoster();
+  renderSummary();
+  updatePoints();
+}
+
+// ── RENDER: ROSTER ──────────────────────────────────────────────────
+function renderRoster() {
+  const list = document.getElementById('rosterList');
+  const emptyState = document.getElementById('emptyState');
+  renderUnitAddControls();
+
+  if (!getFaction()) {
+    emptyState.style.display = 'flex';
+    list.innerHTML = '';
+    return;
+  }
+
+  if (state.roster.length === 0) {
+    emptyState.style.display = 'flex';
+    list.innerHTML = '<div class="ornament-divider">✦ ✦ ✦</div>';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+
+  const coreUnits = state.roster.filter(ru => ru.type === 'core');
+  const supportUnits = state.roster.filter(ru => ru.type === 'support');
+
+  let html = '';
+  if (coreUnits.length) {
+    html += `<div class="roster-section-title">Core Units</div>`;
+    html += coreUnits.map(ru => renderRosterUnitCard(ru)).join('');
+  }
+  if (supportUnits.length) {
+    html += `<div class="roster-section-title">Support Units</div>`;
+    html += supportUnits.map(ru => renderRosterUnitCard(ru)).join('');
+  }
+
+  list.innerHTML = html;
+
+  list.querySelectorAll('.roster-unit').forEach(card => {
+    const id = parseInt(card.dataset.ruid);
+    card.querySelector('.count-btn.minus').addEventListener('click', (e) => {
+      e.stopPropagation();
+      changeModelCount(id, -1);
+    });
+    card.querySelector('.count-btn.plus').addEventListener('click', (e) => {
+      e.stopPropagation();
+      changeModelCount(id, +1);
+    });
+    card.addEventListener('click', () => openUnitModal(id));
+  });
+}
+
+function renderRosterUnitCard(ru) {
+  const unit = UNITS[ru.unitId];
+  if (!unit) return '';
+  const pts = calcUnitPts(ru);
+
+  return `
+    <div class="roster-unit type-${ru.type}" data-ruid="${ru._id}">
+      <div class="unit-card-header">
+        <span class="unit-card-name">${unit.name}</span>
+        <span class="unit-type-badge badge-${ru.type}">${ru.type}</span>
+      </div>
+      <div class="unit-card-body">
+        <div class="unit-stats-grid">
+          <div class="unit-stat">
+            <span class="stat-label">Fight</span>
+            <span class="stat-value">${unit.fight}</span>
+          </div>
+          <div class="unit-stat">
+            <span class="stat-label">Shoot</span>
+            <span class="stat-value">${unit.shoot}</span>
+          </div>
+          <div class="unit-stat">
+            <span class="stat-label">Resolve</span>
+            <span class="stat-value">${unit.resolve}</span>
+          </div>
+        </div>
+        <div class="unit-card-right">
+          <div class="unit-rules-mini">${unit.specialRules.slice(0,3).join(', ')}${unit.specialRules.length > 3 ? '…' : ''}</div>
+          <div class="unit-rules-mini"><em>${unit.weapons}${unit.equipment ? ' / ' + unit.equipment : ''}</em></div>
+        </div>
+      </div>
+      <div class="unit-card-footer">
+        <div class="model-count-control">
+          <button class="count-btn minus">−</button>
+          <span class="count-display">${ru.modelCount}</span>
+          <button class="count-btn plus">+</button>
+          <span style="font-size:0.72rem; color:var(--ink-muted); margin-left:0.25rem">models</span>
+        </div>
+        <div class="unit-pts-display">${pts} <span>pts</span></div>
+      </div>
+    </div>
+  `;
+}
+
+function changeModelCount(ruid, delta) {
+  const ru = state.roster.find(r => r._id === ruid);
+  if (!ru) return;
+  const unit = UNITS[ru.unitId];
+  const min = unit.minModels || 4;
+  const max = unit.maxModels || 20;
+  ru.modelCount = Math.max(min, Math.min(max, ru.modelCount + delta));
+  renderRoster();
+  renderSummary();
+  updatePoints();
+}
+
+// ── UNIT MODAL ──────────────────────────────────────────────────────
+let _editingRuId = null;
+
+function openUnitModal(ruid) {
+  _editingRuId = ruid;
+  const ru = state.roster.find(r => r._id === ruid);
+  const unit = UNITS[ru.unitId];
+  if (!unit || !ru) return;
+
+  document.getElementById('modalTitle').textContent = `Edit: ${unit.name}`;
+
+  const body = document.getElementById('modalBody');
+  body.innerHTML = `
+    <div class="unit-editor-stats">
+      <div class="editor-stat"><span class="stat-label">Experience</span><span class="stat-value">${unit.experienceLevel}</span></div>
+      <div class="editor-stat"><span class="stat-label">Fight</span><span class="stat-value">${unit.fight}</span></div>
+      <div class="editor-stat"><span class="stat-label">Shoot</span><span class="stat-value">${unit.shoot}</span></div>
+      <div class="editor-stat"><span class="stat-label">Resolve</span><span class="stat-value">${unit.resolve}</span></div>
+      <div class="editor-stat"><span class="stat-label">Base Cost</span><span class="stat-value">${unit.ptsPerModel}pts/model</span></div>
+      <div class="editor-stat"><span class="stat-label">Type</span><span class="stat-value" style="font-size:0.8rem">${ru.type}</span></div>
+    </div>
+
+    <div class="unit-editor-section">
+      <div class="unit-editor-section-title">Weapons & Equipment</div>
+      <p style="font-size:0.82rem; color:var(--ink-faded); line-height:1.5">${unit.weapons}${unit.sidearms ? '<br><em>Sidearms: ' + unit.sidearms + '</em>' : ''}${unit.equipment ? '<br><em>Equipment: ' + unit.equipment + '</em>' : ''}</p>
+    </div>
+
+    <div class="unit-editor-section">
+      <div class="unit-editor-section-title">Special Rules</div>
+      <p style="font-size:0.82rem; color:var(--ink-faded); line-height:1.5">${unit.specialRules.join(' · ')}</p>
+    </div>
+
+    ${unit.options && unit.options.length ? `
+    <div class="unit-editor-section">
+      <div class="unit-editor-section-title">Unit Options <span style="font-weight:400; color:var(--ink-muted)">(for reference)</span></div>
+      ${unit.options.map((opt, i) => `
+        <label class="option-checkbox">
+          <input type="checkbox" data-opt="${i}" ${(ru.selectedOptions || []).includes(i) ? 'checked' : ''} />
+          <span>${opt}</span>
+        </label>
+      `).join('')}
+    </div>
+    ` : ''}
+
+    ${unit.note ? `<div class="unit-editor-section"><p style="font-size:0.78rem; font-style:italic; color:var(--red)">⚠ ${unit.note}</p></div>` : ''}
+
+    <div class="unit-editor-section">
+      <div class="unit-editor-section-title">Model Count</div>
+      <div class="model-count-editor">
+        <label>Models:</label>
+        <input type="number" id="modalModelCount" value="${ru.modelCount}" min="${unit.minModels || 4}" max="${unit.maxModels || 20}" step="1" />
+        <div class="pts-preview" id="modalPtsPreview">${calcUnitPts(ru)}pts</div>
+      </div>
+      <p style="font-size:0.72rem; color:var(--ink-muted); margin-top:0.3rem">Min: ${unit.minModels || 4} / Max: ${unit.maxModels || 20}</p>
+    </div>
+  `;
+
+  // Live pts preview — recalculates from current checkbox state + model count
+  function refreshModalPts() {
+    const count = Math.max(unit.minModels || 4, Math.min(unit.maxModels || 20,
+      parseInt(document.getElementById('modalModelCount').value) || unit.minModels || 4));
+    const preview = calcUnitPts({ ...ru, modelCount: count });
+    document.getElementById('modalPtsPreview').textContent = preview + 'pts';
+  }
+
+  document.getElementById('modalModelCount').addEventListener('input', refreshModalPts);
+
+  // Track option selections
+  body.querySelectorAll('input[data-opt]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const idx = parseInt(cb.dataset.opt);
+      if (!ru.selectedOptions) ru.selectedOptions = [];
+      if (cb.checked) {
+        if (!ru.selectedOptions.includes(idx)) ru.selectedOptions.push(idx);
+      } else {
+        ru.selectedOptions = ru.selectedOptions.filter(i => i !== idx);
+      }
+      refreshModalPts();
+    });
+  });
+
+  document.getElementById('unitModal').style.display = 'flex';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeUnitModal);
+document.getElementById('unitModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeUnitModal();
+});
+
+document.getElementById('btnSaveUnit').addEventListener('click', () => {
+  const ru = state.roster.find(r => r._id === _editingRuId);
+  if (!ru) return;
+  const unit = UNITS[ru.unitId];
+  const count = parseInt(document.getElementById('modalModelCount').value);
+  ru.modelCount = Math.max(unit.minModels || 4, Math.min(unit.maxModels || 20, count));
+  closeUnitModal();
+  renderRoster();
+  renderSummary();
+  updatePoints();
+});
+
+document.getElementById('btnRemoveUnit').addEventListener('click', () => {
+  if (confirm('Remove this unit from the force?')) {
+    state.roster = state.roster.filter(r => r._id !== _editingRuId);
+    closeUnitModal();
+    renderRoster();
+    renderSummary();
+    updatePoints();
+  }
+});
+
+function closeUnitModal() {
+  document.getElementById('unitModal').style.display = 'none';
+  _editingRuId = null;
+}
+
+// ── RENDER: UNIT LIBRARY ────────────────────────────────────────────
+function renderUnitLibrary() {
+  const lib = document.getElementById('unitLibrary');
+  const faction = getFaction();
+
+  if (!faction) {
+    lib.innerHTML = '<div class="empty-state"><div class="empty-text">Select a faction to browse units.</div></div>';
+    return;
+  }
+
+  const query = (document.getElementById('unitSearch').value || '').toLowerCase();
+  const allIds = [...new Set([...faction.coreUnits, ...faction.supportUnits])];
+  const units = allIds
+    .map(id => ({ id, unit: UNITS[id], isCore: faction.coreUnits.includes(id) }))
+    .filter(({ id, unit }) => unit && (
+      !query ||
+      unit.name.toLowerCase().includes(query) ||
+      unit.specialRules.some(r => r.toLowerCase().includes(query))
+    ));
+
+  if (units.length === 0) {
+    lib.innerHTML = '<div class="empty-state"><div class="empty-text">No units match your search.</div></div>';
+    return;
+  }
+
+  lib.innerHTML = units.map(({ id, unit, isCore }) => `
+    <div class="lib-unit-card" title="Click to add to roster" data-uid="${id}" data-iscore="${isCore}">
+      <div class="lib-unit-header">
+        <span class="lib-unit-name">${unit.name}</span>
+        <span class="lib-unit-pts">${unit.ptsPerModel}pts/model</span>
+      </div>
+      <div class="lib-unit-body">
+        <div class="lib-unit-exp">${unit.experienceLevel} · ${isCore ? 'Core' : 'Support'}</div>
+        <div class="lib-unit-rules">${unit.specialRules.join(', ')}</div>
+      </div>
+      <div class="lib-unit-stats">
+        <span class="lib-stat">Fight <strong>${unit.fight}</strong></span>
+        <span class="lib-stat">Shoot <strong>${unit.shoot}</strong></span>
+        <span class="lib-stat">Resolve <strong>${unit.resolve}</strong></span>
+      </div>
+    </div>
+  `).join('');
+
+  lib.querySelectorAll('.lib-unit-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const uid = card.dataset.uid;
+      const isCore = card.dataset.iscore === 'true';
+      const unit = UNITS[uid];
+      if (!unit) return;
+      addRosterUnit({ unitId: uid, type: isCore ? 'core' : 'support', modelCount: unit.minModels || 4, selectedOptions: [] });
+    });
+  });
+}
+
+document.getElementById('unitSearch').addEventListener('input', renderUnitLibrary);
+
+// ── RENDER: SUMMARY ─────────────────────────────────────────────────
+function renderSummary() {
+  const panel = document.getElementById('summaryPanel');
+  const cmd = getCommander();
+
+  if (!getFaction()) {
+    panel.innerHTML = '<div class="empty-state"><div class="empty-text">Add units to see your force summary.</div></div>';
+    return;
+  }
+
+  const coreUnits = state.roster.filter(ru => ru.type === 'core');
+  const supportUnits = state.roster.filter(ru => ru.type === 'support');
+  const totalPts = calcTotalPts();
+
+  const renderRows = (units) => units.map(ru => {
+    const unit = UNITS[ru.unitId];
+    if (!unit) return '';
+    return `
+      <div class="summary-row">
+        <span class="summary-row-name">${unit.name} ×${ru.modelCount}</span>
+        <span class="summary-row-pts">${calcUnitPts(ru)}pts</span>
+      </div>
+    `;
+  }).join('');
+
+  panel.innerHTML = `
+    ${cmd ? `
+    <div class="summary-section">
+      <div class="summary-title">Commander</div>
+      <div class="summary-row">
+        <span class="summary-row-name">${cmd.name}</span>
+        <span class="summary-row-pts">${cmd.pts}pts</span>
+      </div>
+      ${(state.commanderPickedRules.length > 0 || state.commanderPoorLeadership) ? `
+      <div class="summary-row" style="opacity:0.75; font-size:0.8rem">
+        <span class="summary-row-name">${[...(state.commanderPoorLeadership ? ['Poor Leadership'] : []), ...state.commanderPickedRules].join(', ')}</span>
+      </div>` : ''}
+    </div>
+    ` : ''}
+
+    ${coreUnits.length ? `
+    <div class="summary-section">
+      <div class="summary-title">Core Units</div>
+      ${renderRows(coreUnits)}
+    </div>
+    ` : ''}
+
+    ${supportUnits.length ? `
+    <div class="summary-section">
+      <div class="summary-title">Support Units</div>
+      ${renderRows(supportUnits)}
+    </div>
+    ` : ''}
+
+    <div class="summary-total">
+      <span>Total</span>
+      <span class="summary-total-val">${totalPts} pts</span>
+    </div>
+
+    <div class="summary-section" style="margin-top:0.5rem">
+      <div class="summary-title">Force Composition</div>
+      <div class="summary-row">
+        <span class="summary-row-name">Core units</span>
+        <span class="summary-row-pts">${coreUnits.length}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-row-name">Support units</span>
+        <span class="summary-row-pts">${supportUnits.length}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-row-name">Total models</span>
+        <span class="summary-row-pts">${state.roster.reduce((s, ru) => s + ru.modelCount, 0)}</span>
+      </div>
+    </div>
+  `;
+}
+
+// ── RENDER: RULES TAB ───────────────────────────────────────────────
+function renderRulesTab() {
+  const faction = getFaction();
+  const rulesDiv = document.getElementById('factionRulesDisplay');
+  const optionsDiv = document.getElementById('factionOptionsDisplay');
+
+  if (!faction) {
+    rulesDiv.innerHTML = '<p class="muted">Select a faction to see its rules.</p>';
+    optionsDiv.innerHTML = '<p class="muted">Select a faction to see force options.</p>';
+    return;
+  }
+
+  rulesDiv.innerHTML = faction.forceSpecialRules.length
+    ? faction.forceSpecialRules.map(r => `<div class="faction-rule-item">• ${r}</div>`).join('')
+    : '<p class="muted">No special faction rules.</p>';
+
+  optionsDiv.innerHTML = faction.forceOptions.length
+    ? faction.forceOptions.map(o => `<div class="faction-rule-item">◈ ${o}</div>`).join('')
+    : '<p class="muted">No force options.</p>';
+}
+
+// ── POINTS DISPLAY ──────────────────────────────────────────────────
+function updatePoints() {
+  document.getElementById('totalPoints').textContent = calcTotalPts();
+}
+
+// ── TABS ────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'summary') renderSummary();
+  });
+});
+
+// ── EXPORT / IMPORT ─────────────────────────────────────────────────
+document.getElementById('btnNew').addEventListener('click', () => {
+  if (state.roster.length > 0 || state.commanderId) {
+    if (!confirm('Start a new force? All current progress will be lost.')) return;
+  }
+  state = { nationality: null, factionId: null, commanderId: null, roster: [], forceOptions: {}, nextId: 1 };
+  renderAll();
+});
+
+document.getElementById('btnExport').addEventListener('click', () => {
+  const modal = document.getElementById('exportModal');
+  const textarea = document.getElementById('exportText');
+
+  // Generate readable text export + JSON
+  const faction = getFaction();
+  const cmd = getCommander();
+  const lines = [];
+  lines.push('══════════════════════════════════════════');
+  lines.push('  FROZEN EMPIRES — Force List');
+  lines.push('══════════════════════════════════════════');
+  if (faction) lines.push(`  Faction: ${faction.name}`);
+  if (cmd) lines.push(`  Commander: ${cmd.name} (${cmd.pts}pts)`);
+  lines.push('');
+  const coreUnits = state.roster.filter(ru => ru.type === 'core');
+  const supportUnits = state.roster.filter(ru => ru.type === 'support');
+  if (coreUnits.length) {
+    lines.push('── CORE UNITS ──');
+    coreUnits.forEach(ru => {
+      const unit = UNITS[ru.unitId];
+      if (unit) lines.push(`  • ${unit.name} ×${ru.modelCount}  (${calcUnitPts(ru)}pts)`);
+    });
+  }
+  if (supportUnits.length) {
+    lines.push('');
+    lines.push('── SUPPORT UNITS ──');
+    supportUnits.forEach(ru => {
+      const unit = UNITS[ru.unitId];
+      if (unit) lines.push(`  • ${unit.name} ×${ru.modelCount}  (${calcUnitPts(ru)}pts)`);
+    });
+  }
+  lines.push('');
+  lines.push(`  TOTAL: ${calcTotalPts()} pts`);
+  lines.push('══════════════════════════════════════════');
+  lines.push('');
+  lines.push('── IMPORT JSON (paste into Import) ──');
+  lines.push(JSON.stringify(state, null, 2));
+
+  textarea.value = lines.join('\n');
+  modal.style.display = 'flex';
+});
+
+document.getElementById('exportModalClose').addEventListener('click', () => {
+  document.getElementById('exportModal').style.display = 'none';
+});
+
+document.getElementById('exportModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) document.getElementById('exportModal').style.display = 'none';
+});
+
+document.getElementById('btnCopyExport').addEventListener('click', () => {
+  const text = document.getElementById('exportText').value;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('btnCopyExport').textContent = 'Copied!';
+    setTimeout(() => document.getElementById('btnCopyExport').textContent = 'Copy to Clipboard', 2000);
+  });
+});
+
+document.getElementById('btnDownloadExport').addEventListener('click', () => {
+  const text = document.getElementById('exportText').value;
+  const faction = getFaction();
+  const filename = `frozen-empires-${faction ? faction.id : 'force'}-${Date.now()}.txt`;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btnImport').addEventListener('click', () => {
+  document.getElementById('importText').value = '';
+  document.getElementById('importModal').style.display = 'flex';
+});
+
+document.getElementById('importModalClose').addEventListener('click', () => {
+  document.getElementById('importModal').style.display = 'none';
+});
+
+document.getElementById('importModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) document.getElementById('importModal').style.display = 'none';
+});
+
+document.getElementById('btnDoImport').addEventListener('click', () => {
+  const text = document.getElementById('importText').value.trim();
+  // Try to extract JSON — could be just JSON or embedded in the export text
+  let jsonStr = text;
+  const jsonStart = text.indexOf('{\n  "nationality"');
+  if (jsonStart !== -1) jsonStr = text.slice(jsonStart);
+
+  try {
+    const imported = JSON.parse(jsonStr);
+    // Basic validation
+    if (typeof imported.nationality === 'undefined') throw new Error('Invalid format');
+    state = { ...imported, nextId: imported.nextId || (imported.roster ? imported.roster.length + 1 : 1) };
+    document.getElementById('importModal').style.display = 'none';
+    renderAll();
+  } catch (e) {
+    alert('Could not parse force data. Please paste the JSON section from an exported force.');
+  }
+});
+
+// ── INIT ────────────────────────────────────────────────────────────
+function renderAll() {
+  renderNationalityGrid();
+  renderFactionSection();
+  renderCommanderSection();
+  renderForceOptionsSection();
+  renderRoster();
+  renderUnitLibrary();
+  renderSummary();
+  renderRulesTab();
+  updatePoints();
+}
+
+renderAll();
+
+</script>
 </body>
 </html>
